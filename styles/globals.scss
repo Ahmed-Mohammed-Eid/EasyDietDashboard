@@ -1,0 +1,19 @@
+@media screen and (max-width: 991px) {
+    .layout-menu-button.layout-topbar-button{
+        margin-right: auto;
+        margin-left: initial !important;
+    }
+}
+
+// COLOR THE LOGOUT BUTTON
+a[href="/auth/login"]{
+    color: #ff0000 !important;
+}
+
+// RESTYLE IF THE LANGUAGE IS ARABIC
+html[lang="ar"] {
+    .layout-menu ul a .layout-menuitem-icon {
+        margin-right: 0;
+        margin-left: 0.5rem;
+    }
+}
