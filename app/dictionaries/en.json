@@ -4,6 +4,11 @@
       "title": "HOME",
       "dashboard": "Dashboard"
     },
+    "coupons": {
+      "title": "COUPONS",
+      "list": "Coupons List",
+      "add": "Add Coupon"
+    },
     "settings": {
       "title": "SETTINGS",
       "logout": "Logout"

@@ -7,7 +7,7 @@ const LoginPage = async ({params: {lang}}) => {
     const dictionary = await getDictionary(lang);
 
     return (
-        <LoginContent dictionary={dictionary} />
+        <LoginContent dictionary={dictionary} lang={lang} />
     );
 };
 

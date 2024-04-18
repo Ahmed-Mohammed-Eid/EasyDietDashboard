@@ -104,4 +104,5 @@ export interface AppMenuItemProps {
     index?: number;
     root?: boolean;
     className?: string;
+    lang?: string;
 }

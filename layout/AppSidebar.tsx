@@ -1,7 +1,16 @@
 import AppMenu from './AppMenu';
+import { ReactNode } from 'react';
 
-const AppSidebar = ({dictionary, lang}) => {
-    return <AppMenu dictionary={dictionary} lang={lang} />;
+type ChildContainerProps = {
+    children: ReactNode;
+    dictionary: any;
+    lang: string;
+};
+
+const AppSidebar = ({ children, dictionary, lang }: ChildContainerProps) => {
+    return <AppMenu dictionary={dictionary} lang={lang}>
+        {children}
+    </AppMenu>;
 };
 
 export default AppSidebar;

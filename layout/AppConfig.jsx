@@ -2,14 +2,14 @@
 
 import { PrimeReactContext } from 'primereact/api';
 import { Button } from 'primereact/button';
-import { InputSwitch, InputSwitchChangeEvent } from 'primereact/inputswitch';
-import { RadioButton, RadioButtonChangeEvent } from 'primereact/radiobutton';
+import { InputSwitch } from 'primereact/inputswitch';
+import { RadioButton } from 'primereact/radiobutton';
 import { Sidebar } from 'primereact/sidebar';
 import { classNames } from 'primereact/utils';
 import React, { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from './context/layoutcontext';
 import Image from 'next/image';
-import {usePathname} from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 const AppConfig = (props) => {
 
@@ -60,17 +60,21 @@ const AppConfig = (props) => {
         document.documentElement.style.fontSize = layoutConfig.scale + 'px';
     };
 
-    // CUSTOME FUNCTION TO SWITCH THE LANGUAGE
+    // CUSTOM FUNCTION TO SWITCH THE LANGUAGE
     const handleLanguageChange = (lang) => {
+        // REMOVE THE LANGUAGE FROM THE LOCAL STORAGE
+        localStorage.removeItem('language');
+        // REMOVE THE LANGUAGE FROM THE COOKIES
+        document.cookie = `language=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         // SET THE LANGUAGE TO THE LOCAL STORAGE
         localStorage.setItem('language', lang);
         // SET THE LANGUAGE TO THE COOKIES
-        document.cookie = `language=${lang}`;
+        document.cookie = `language=${lang} path=/`;
         // get the path without the language
-        const parts = pathname.split("/");
+        const parts = pathname.split('/');
         parts[1] = lang;
         // redirect to the new path
-        window.location.href = parts.join("/");
+        window.location.href = parts.join('/');
     };
 
     useEffect(() => {
@@ -81,14 +85,14 @@ const AppConfig = (props) => {
     // GET THE LANGUAGE FROM THE BROWSER AND SET IT TO THE LAYOUT CONFIG
     useEffect(() => {
         // GET IT FROM THE LOCAL STORAGE
-        const language = localStorage.getItem('language') || 'en';
+        const language = localStorage.getItem('language');
         setLayoutConfig((prevState) => ({ ...prevState, language }));
     }, [setLayoutConfig]);
 
     // SET THE LANGUAGE TO THE LOCAL STORAGE AND THE COOKIES WHEN THE LANGUAGE CHANGES AND THE PAGE IS LOADED
     useEffect(() => {
         // GET THE LANGUAGE FROM THE LOCAL STORAGE
-        const language = localStorage.getItem('language') || 'en';
+        const language = localStorage.getItem('language');
         // SET THE LANGUAGE TO THE LOCAL STORAGE
         localStorage.setItem('language', language);
         // SET THE LANGUAGE TO THE COOKIES
@@ -106,7 +110,7 @@ const AppConfig = (props) => {
                      className="layout-config-sidebar w-20rem">
                 {!props.simple && (
                     <>
-                        <h5>{props.dictionary.optionsbar.language.title}</h5>
+                        <h5>{props.dictionary?.optionsbar.language.title}</h5>
                         <div className="flex">
                             <div className="field-radiobutton flex-1">
                                 <RadioButton name="language" value={'en'} checked={layoutConfig.language === 'en'}
@@ -138,9 +142,9 @@ const AppConfig = (props) => {
                                                      ...prevState,
                                                      language: e.value
                                                  }));
-                                                    // GO TO THE /ar/ ROUTE
-                                                    handleLanguageChange('ar');
-                                                    // window.location.href = '/ar';
+                                                 // GO TO THE /ar/ ROUTE
+                                                 handleLanguageChange('ar');
+                                                 // window.location.href = '/ar';
                                              }}
                                              inputId="ar"
                                 />
@@ -150,7 +154,7 @@ const AppConfig = (props) => {
                             </div>
                         </div>
 
-                        <h5>{props.dictionary.optionsbar.scale.title}</h5>
+                        <h5>{props.dictionary?.optionsbar.scale.title}</h5>
                         <div className="flex align-items-center">
                             <Button icon="pi pi-minus" type="button" onClick={decrementScale} rounded text
                                     className="w-2rem h-2rem mr-2" disabled={layoutConfig.scale === scales[0]}></Button>
@@ -167,7 +171,7 @@ const AppConfig = (props) => {
                                     disabled={layoutConfig.scale === scales[scales.length - 1]}></Button>
                         </div>
 
-                        <h5>{props.dictionary.optionsbar.menuType.title}</h5>
+                        <h5>{props.dictionary?.optionsbar.menuType.title}</h5>
                         <div className="flex">
                             <div className="field-radiobutton flex-1">
                                 <RadioButton name="menuMode" value={'static'}
@@ -183,7 +187,7 @@ const AppConfig = (props) => {
                             </div>
                         </div>
 
-                        <h5>{props.dictionary.optionsbar.inputStyle.title}</h5>
+                        <h5>{props.dictionary?.optionsbar.inputStyle.title}</h5>
                         <div className="flex">
                             <div className="field-radiobutton flex-1">
                                 <RadioButton name="inputStyle" value={'outlined'}
@@ -200,12 +204,60 @@ const AppConfig = (props) => {
                             </div>
                         </div>
 
-                        <h5>{props.dictionary.optionsbar.RippleEffect.title}</h5>
+                        <h5>{props.dictionary?.optionsbar.RippleEffect.title}</h5>
                         <InputSwitch checked={layoutConfig.ripple}
                                      onChange={(e) => changeRipple(e)}></InputSwitch>
                     </>
                 )}
-                <h5>{props.dictionary.optionsbar.BootstrapTheme.title}</h5>
+                {props.simple && (
+                    <>
+                        <h5>{props.dictionary?.optionsbar.language.title}</h5>
+
+                        <div className="flex">
+                            <div className="field-radiobutton flex-1">
+                                <RadioButton name="language" value={'en'} checked={layoutConfig.language === 'en'}
+                                             onChange={(e) => {
+                                                 // SET THE LANGUAGE TO THE LAYOUT CONFIG
+                                                 setLayoutConfig((prevState) => ({
+                                                     ...prevState,
+                                                     language: e.value
+                                                 }));
+                                                 // GO TO THE /en/ ROUTE
+                                                 handleLanguageChange('en');
+                                                 // window.location.href = '/en';
+                                             }}
+                                             inputId="en"
+                                />
+                                <label htmlFor="en">
+                                    <Image src={'/assets/en.svg'} alt={'en language'} width={22} height={16} />
+                                </label>
+                            </div>
+                            <div className="field-radiobutton flex-1">
+                                <RadioButton name="language" value={'ar'} checked={layoutConfig.language === 'ar'}
+                                             onChange={(e) => {
+                                                 // SET THE LANGUAGE TO THE LOCAL STORAGE
+                                                 localStorage.setItem('language', e.value);
+                                                 // SET THE LANGUAGE TO THE COOKIES
+                                                 document.cookie = `language=${e.value}`;
+                                                 // SET THE LANGUAGE TO THE LAYOUT CONFIG
+                                                 setLayoutConfig((prevState) => ({
+                                                     ...prevState,
+                                                     language: e.value
+                                                 }));
+                                                 // GO TO THE /ar/ ROUTE
+                                                 handleLanguageChange('ar');
+                                                 // window.location.href = '/ar';
+                                             }}
+                                             inputId="ar"
+                                />
+                                <label htmlFor="ar">
+                                    <Image src={'/assets/ar.svg'} alt={'ar language'} width={22} height={16} />
+                                </label>
+                            </div>
+                        </div>
+                    </>
+                )}
+                <h5>{props.dictionary?.optionsbar.BootstrapTheme.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem"
@@ -237,7 +289,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.MaterialTheme.title}</h5>
+                <h5>{props.dictionary?.optionsbar.MaterialTheme.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem"
@@ -268,7 +320,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.MaterialCompact.title}</h5>
+                <h5>{props.dictionary?.optionsbar.MaterialCompact.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem"
@@ -300,7 +352,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.TailwindTheme.title}</h5>
+                <h5>{props.dictionary?.optionsbar.TailwindTheme.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem"
@@ -311,7 +363,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.FluentTheme.title}</h5>
+                <h5>{props.dictionary?.optionsbar.FluentTheme.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem" onClick={() => _changeTheme('fluent-light', 'light')}>
@@ -321,7 +373,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.PrimeOne2022.title}</h5>
+                <h5>{props.dictionary?.optionsbar.PrimeOne2022.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem"
@@ -379,7 +431,7 @@ const AppConfig = (props) => {
                     </div>
                 </div>
 
-                <h5>{props.dictionary.optionsbar.PrimeOne2021.title}</h5>
+                <h5>{props.dictionary?.optionsbar.PrimeOne2021.title}</h5>
                 <div className="grid">
                     <div className="col-3">
                         <button className="p-link w-2rem h-2rem" onClick={() => _changeTheme('saga-blue', 'light')}>

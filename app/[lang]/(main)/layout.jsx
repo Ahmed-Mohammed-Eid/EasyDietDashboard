@@ -7,7 +7,7 @@ export const metadata = {
     robots: { index: false, follow: false },
     viewport: { initialScale: 1, width: 'device-width' },
     icons: {
-        icon: '/favicon.ico'
+        icon: '/assets/easyDietLogo.png',
     }
 };
 

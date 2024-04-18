@@ -16,7 +16,13 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     const { activeMenu, setActiveMenu } = useContext(MenuContext);
     const item = props.item;
     const key = props.parentKey ? props.parentKey + '-' + props.index : String(props.index);
-    const isActiveRoute = item!.to && pathname === item!.to;
+
+    // NEW PATH USING LANGUAGE
+    const newLangPath = `${props.lang === 'en' ? '' : '/ar'}${item!.to === '/' ? '' : item!.to}`;
+    console.log('newLangPath', newLangPath);
+    console.log('pathname', pathname);
+
+    const isActiveRoute = (item!.to && pathname === `${newLangPath}`);
     const active = activeMenu === key || activeMenu.startsWith(key + '-');
     const onRouteChange = (url: string) => {
         if (item!.to && item!.to === url) {
