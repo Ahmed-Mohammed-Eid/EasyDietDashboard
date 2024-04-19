@@ -29,6 +29,14 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
             ]
         },
         {
+            label: lang === 'en' ? 'Bundles' : 'الباقات',
+            icon: 'pi pi-fw pi-shopping-cart',
+            items: [
+                { label: lang === 'en' ? 'Bundles List' : 'قائمة الباقات', icon: 'pi pi-fw pi-list', to: '/bundles' },
+                { label: lang === 'en' ? 'Add Bundle' : 'إضافة باقة', icon: 'pi pi-fw pi-plus', to: '/bundles/add' }
+            ]
+        },
+        {
             label: lang === 'en' ? 'Categories' : 'الأقسام',
             icon: 'pi pi-fw pi-folder',
             items: [

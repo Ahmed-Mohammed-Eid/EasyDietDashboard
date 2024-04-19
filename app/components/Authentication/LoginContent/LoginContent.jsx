@@ -72,7 +72,9 @@ const LoginContent = ({dictionary, lang}) => {
                 document.cookie = `token=${res.data.token}; path=/`;
                 document.cookie = `role=${res.data?.admin?.role}; path=/`;
 
-                if(res.data?.admin?.role === "admin"){
+                console.log(res.data);
+
+                if(res.data?.user?.role === "admin"){
                     // REDIRECT TO HOME PAGE
                     toast.success("Login Successful");
                     router.push("/");

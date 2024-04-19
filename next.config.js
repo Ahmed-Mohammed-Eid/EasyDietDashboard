@@ -21,6 +21,15 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'api.easydietkw.com',
             },
+        //     LOCALHOST
+            {
+                protocol: 'http',
+                hostname: 'localhost',
+            },
+            {
+                protocol: 'https',
+                hostname: 'localhost',
+            },
         ],
     },
 }
