@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 // PRIME REACT
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import { Dialog } from 'primereact/dialog';
 
 // HELPERS
 import { toast } from 'react-hot-toast';
@@ -19,10 +18,15 @@ export default function CategoriesList({ lang }) {
 
     // STATES
     const [categories, setCategories] = useState([]);
-    const [selectedCategoryToDelete, setSelectedCategoryToDelete] = useState(null);
 
     // EFFECT TO FETCH DATA
     useEffect(() => {
+        // GET CATEGORIES LIST
+        getCategoriesList();
+    }, []);
+
+    // GET CATEGORIES LIST HANDLER
+    const getCategoriesList = () => {
         // GET THE TOKEN FROM LOCAL STORAGE
         const token = localStorage.getItem('token');
 
@@ -33,54 +37,20 @@ export default function CategoriesList({ lang }) {
             }
         })
             .then(res => {
-                setCategories(res.data);
+                setCategories(res.data?.categories || []);
             })
             .catch(err => {
                 console.log(err);
                 toast.error(lang === 'en' ? 'Failed to fetch categories' : 'فشل في جلب الأقسام');
             });
-    }, []);
-
-
-    // DELETE CATEGORY
-    // const deleteCategory = (category) => {
-    //     // GET THE TOKEN FROM LOCAL STORAGE
-    //     const token = localStorage.getItem('token');
-    //
-    //     // VALIDATE THE CATEGORY
-    //     if (!category) {
-    //         toast.error(lang === 'en' ? 'Category not found' : 'الكوبون غير موجود');
-    //         return;
-    //     }
-    //
-    //     // API CALL /categories
-    //     axios.delete(`${process.env.API_URL}/delete/category`, {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`
-    //         },
-    //         data: {
-    //             categoryId: selectedCategoryToDelete._id
-    //         }
-    //     })
-    //         .then(res => {
-    //             setCategories(res.data);
-    //             setSelectedCategoryToDelete(null);
-    //             toast.success(lang === 'en' ? 'Category deleted successfully' : 'تم حذف الكوبون بنجاح');
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //             toast.error(lang === 'en' ? 'Failed to delete category' : 'فشل في حذف الكوبون');
-    //         });
-    // };
-
+    };
 
     return (
         <>
             <div className="card">
                 <DataTable
                     dir={lang === 'en' ? 'ltr' : 'rtl'}
-                    // value={categories || []}
-                    value={[{ categoryNameAR: 'ملابس', categoryNameEN: 'Clothes', image: 'https://via.placeholder.com/150', _id: '1' }] || []}
+                    value={categories || []}
                     paginator
                     rows={25}
                     rowsPerPageOptions={[25, 50, 100]}
@@ -96,8 +66,8 @@ export default function CategoriesList({ lang }) {
                         body={(rowData) => {
                             return (
                                 <Image
-                                    src={rowData.image}
-                                    alt={rowData.name_en}
+                                    src={rowData?.image || '/assets/404.jpg'}
+                                    alt={lang === 'en' ? 'Category Image' : 'صورة القسم'}
                                     width={50}
                                     height={50}
                                     style={{ width: '50px', height: '50px', borderRadius: '50%', border: '1px solid #ccc'}}
@@ -134,12 +104,6 @@ export default function CategoriesList({ lang }) {
                                     >
                                         {lang === 'en' ? 'Edit' : 'تعديل'}
                                     </button>
-                                    <button
-                                        className={'AMB_btn AMB_btn-danger'}
-                                        onClick={() => setSelectedCategoryToDelete(rowData)}
-                                    >
-                                        {lang === 'en' ? 'Delete' : 'حذف'}
-                                    </button>
                                 </div>
                             );
                         }}
@@ -147,36 +111,6 @@ export default function CategoriesList({ lang }) {
                         style={{ width: '10%' }}
                     />
                 </DataTable>
-
-                {/* DELETE DIALOG */}
-                <Dialog
-                    visible={selectedCategoryToDelete}
-                    onHide={() => setSelectedCategoryToDelete(null)}
-                    header={lang === 'en' ? 'Delete Category' : 'حذف القسم'}
-                    footer={(
-                        <div className={'flex justify-center'}>
-                            <button
-                                className={'AMB_btn AMB_btn-danger'}
-                                onClick={() => deleteCategory(selectedCategoryToDelete)}
-                            >
-                                {lang === 'en' ? 'Delete' : 'حذف'}
-                            </button>
-                            <button className={'AMB_btn AMB_btn-primary'}
-                                    onClick={() => setSelectedCategoryToDelete(null)}>
-                                {lang === 'en' ? 'Cancel' : 'إلغاء'}
-                            </button>
-                        </div>
-                    )}
-                    position={'center'}
-                    style={{ width: '100%', maxWidth: '500px' }}
-                    draggable={false}
-                    resizable={false}
-                    dir={lang === 'en' ? 'ltr' : 'rtl'}
-                >
-                    <div className={'flex justify-center'}>
-                        <p>{lang === 'en' ? 'Are you sure you want to delete this category?' : 'هل أنت متأكد أنك تريد حذف هذا القسم؟'}</p>
-                    </div>
-                </Dialog>
             </div>
         </>
     );

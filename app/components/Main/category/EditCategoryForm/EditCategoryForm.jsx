@@ -28,7 +28,7 @@ export default function EditCategoryForm({ lang, id }) {
 
 
         // VALIDATE
-        if (!categoryNameAR || !categoryNameEN || !files) {
+        if (!categoryNameAR || !categoryNameEN || !id) {
             return toast.error(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
         }
 
@@ -36,21 +36,24 @@ export default function EditCategoryForm({ lang, id }) {
         const data = new FormData();
         data.append('categoryNameAR', categoryNameAR);
         data.append('categoryNameEN', categoryNameEN);
+        data.append('categoryId', id);
 
-        // LOOP THROUGH FILES
-        for (let i = 0; i < files.length; i++) {
-            data.append('files', files[i]);
+        if(files) {
+            // LOOP THROUGH FILES
+            for (let i = 0; i < files.length; i++) {
+                data.append('files', files[i]);
+            }
         }
 
         // API CALL /create/coupons
-        axios.post(`${process.env.API_URL}/create/bundle/category`, data, {
+        axios.put(`${process.env.API_URL}/edit/category`, data, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
             .then(res => {
                 if (res.status === 200) {
-                    toast.success(lang === 'en' ? 'Category added successfully' : 'تمت تعديل القسم بنجاح');
+                    toast.success(lang === 'en' ? 'Category Updated successfully' : 'تم تعديل القسم بنجاح');
                 }
             })
             .catch(err => {
@@ -71,16 +74,15 @@ export default function EditCategoryForm({ lang, id }) {
             }
         })
             .then(res => {
-                if (res.status === 200) {
-                    setCategoryNameAR(res.data.categoryNameAR);
-                    setCategoryNameEN(res.data.categoryNameEN);
-                }
+                console.log(res.data);
+                setCategoryNameAR(res.data?.category?.categoryNameAR || '');
+                setCategoryNameEN(res.data?.category?.categoryNameEN || '');
             })
             .catch(err => {
                 console.log(err);
                 toast.error(lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
             });
-    }, [id]);
+    }, [id, lang]);
 
     return (
         <form dir={lang === 'en' ? 'ltr' : 'rtl'} onSubmit={handleSubmit}>

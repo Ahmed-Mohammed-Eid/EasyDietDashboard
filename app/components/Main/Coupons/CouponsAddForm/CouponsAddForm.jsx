@@ -36,7 +36,7 @@ export default function CouponsAddForm({ lang }) {
 
 
         // VALIDATE
-        if (!couponText || !discountAmount || !numberOfCodes || (hasExpiry && !expiryDate) || (hasUsageNumber && !usageNumber)){
+        if (!couponText || !discountAmount || !numberOfCodes || (hasExpiry && !expiryDate) || (hasUsageNumber && !usageNumber)) {
             alert(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
             return toast.error(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
         }
@@ -59,10 +59,8 @@ export default function CouponsAddForm({ lang }) {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(res => {
-                if (res.status === 200){
-                    toast.success(lang === 'en' ? 'Coupon added successfully' : 'تمت إضافة الكوبون بنجاح');
-                }
+            .then(_ => {
+                toast.success(lang === 'en' ? 'Coupon added successfully' : 'تمت إضافة الكوبون بنجاح');
             })
             .catch(err => {
                 console.log(err);
@@ -106,8 +104,14 @@ export default function CouponsAddForm({ lang }) {
                     {hasExpiry && (<div className={'field col-12'} dir={'ltr'}>
                         <label htmlFor="expiryDate"
                                dir={lang === 'en' ? 'ltr' : 'rtl'}>{lang === 'en' ? 'Expiry Date' : 'تاريخ الانتهاء'}</label>
-                        <Calendar id="expiryDate" value={expiryDate} onChange={(e) => setExpiryDate(e.value)}
-                                  showIcon />
+                        <Calendar
+                            id="expiryDate"
+                            value={expiryDate}
+                            onChange={(e) => setExpiryDate(e.value)}
+                                  showIcon
+                            // DISABLE PAST DATES
+                            minDate={new Date()}
+                        />
                     </div>)}
                     <div className={'field col-12 flex flex-column align-items-center'}>
                         <label
@@ -134,7 +138,7 @@ export default function CouponsAddForm({ lang }) {
                     icon="pi pi-plus"
                     style={{
                         width: '100%',
-                        padding: '1rem',
+                        padding: '1rem'
                     }}
                 />
             </div>

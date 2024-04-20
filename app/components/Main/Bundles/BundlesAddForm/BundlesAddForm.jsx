@@ -15,18 +15,8 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import { Dropdown } from 'primereact/dropdown';
 import { InputSwitch } from 'primereact/inputswitch';
-import { Dialog } from 'primereact/dialog';
-import { Column } from 'primereact/column';
-import Image from 'next/image';
-import { Tag } from 'primereact/tag';
-import { DataTable } from 'primereact/datatable';
 
 export default function BundlesAddForm({ lang }) {
-
-    // DIALOG STATE
-    const [displayDialog, setDisplayDialog] = useState(false);
-    const [meals, setMeals] = useState([]);
-    const [selectedMeals, setSelectedMeals] = useState([]);
 
     // CATEGORIES
     const [categories, setCategories] = useState([]);
@@ -80,12 +70,8 @@ export default function BundlesAddForm({ lang }) {
             return toast.error(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
         }
 
-        if(!maleImage || !femaleImage){
+        if (!maleImage || !femaleImage) {
             return toast.error(lang === 'en' ? 'Please upload images' : 'يرجى تحميل الصور');
-        }
-
-        if(selectedMeals.length <= 0){
-            return toast.error(lang === 'en' ? 'Please select meals' : 'يرجى اختيار الوجبات');
         }
 
 
@@ -115,11 +101,6 @@ export default function BundlesAddForm({ lang }) {
         formData.append('files', maleImage);
         formData.append('files', femaleImage);
 
-        // MEALS
-        selectedMeals.forEach(meal => {
-            formData.append('mealsIds[]', meal._id);
-        });
-
         // API CALL /create/bundle
         axios.post(`${process.env.API_URL}/create/bundle`, formData, {
             headers: {
@@ -133,27 +114,6 @@ export default function BundlesAddForm({ lang }) {
                 toast.error(lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
             });
     }
-
-    // EFFECT TO FETCH DATA OF MEALS
-    useEffect(() => {
-        // GET THE TOKEN FROM LOCAL STORAGE
-        const token = localStorage.getItem('token');
-
-        // API CALL /meals
-        axios.get(`${process.env.API_URL}/get/all/meals?page=1`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(res => {
-                const meals = res.data?.data?.meals || [];
-                setMeals(meals);
-            })
-            .catch(err => {
-                console.log(err);
-                toast.error(lang === 'en' ? 'Failed to fetch meals' : 'فشل في جلب الوجبات');
-            });
-    }, [lang]);
 
     // EFFECT TO FETCH THE CATEGORIES
     useEffect(() => {
@@ -189,18 +149,9 @@ export default function BundlesAddForm({ lang }) {
         <>
             <form dir={lang === 'en' ? 'ltr' : 'rtl'} onSubmit={handleSubmit}>
                 <div className={`card`}>
-                    <div className={'flex justify-content-between'}>
-                        <h1 className={'text-2xl mb-5 uppercase'}>
-                            {lang === 'en' ? 'Add Bundle' : 'إضافة باقة'}
-                        </h1>
-                        <Button
-                            label={lang === 'en' ? 'Select Meals' : 'اختر الوجبات'}
-                            icon="pi pi-plus"
-                            severity={'secondary'}
-                            type={'button'}
-                            onClick={() => setDisplayDialog(true)}
-                        />
-                    </div>
+                    <h1 className={'text-2xl mb-5 uppercase'}>
+                        {lang === 'en' ? 'Add Bundle' : 'إضافة باقة'}
+                    </h1>
 
                     <div className={'p-fluid formgrid grid'}>
                         <div className={'field col-12'}>
@@ -448,103 +399,6 @@ export default function BundlesAddForm({ lang }) {
                     />
                 </div>
             </form>
-
-            {/*  DIALOG FOR MEALS  */}
-            <Dialog
-                header={lang === 'en' ? 'Select Meals' : 'اختر الوجبات'}
-                visible={displayDialog}
-                style={{ width: '90vw' }}
-                onHide={() => setDisplayDialog(false)}
-                maximizable
-            >
-                <DataTable
-                    dir={lang === 'en' ? 'ltr' : 'rtl'}
-                    value={meals || []}
-                    paginator
-                    rows={25}
-                    rowsPerPageOptions={[25, 50, 100]}
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} orders"
-                    paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                    header={lang === 'en' ? 'MEALS' : 'الوجبات'}
-                    emptyMessage={lang === 'en' ? 'No meals found' : 'لم يتم العثور على وجبات'}
-                    className="p-datatable-sm"
-                    selectionMode={'multiple'}
-                    selection={selectedMeals}
-                    onSelectionChange={(e) => setSelectedMeals(e.value)}
-                >
-                    <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
-
-                    {/* IMAGE */}
-                    <Column
-                        field="imagePath"
-                        header={lang === 'en' ? 'Image' : 'صورة'}
-                        style={{ whiteSpace: 'nowrap' }}
-                        body={(rowData) => {
-                            return (
-                                <Image
-                                    src={rowData.imagePath}
-                                    alt={rowData.mealTitle}
-                                    width={50}
-                                    height={50}
-                                    style={{
-                                        borderRadius: '50%',
-                                        objectFit: 'cover',
-                                        border: '1px solid #ccc'
-                                    }}
-                                />
-                            );
-                        }}
-                    />
-                    <Column
-                        field="mealTitleEn"
-                        header={lang === 'en' ? 'Meal Title (EN)' : 'اسم الوجبة (EN)'}
-                        sortable
-                        filter
-                        filterPlaceholder={lang === 'en' ? 'Search by Meal Title (EN)' : 'ابحث بالاسم (EN)'}
-                        style={{ whiteSpace: 'nowrap' }}
-                    />
-                    <Column
-                        field="mealTitle"
-                        header={lang === 'en' ? 'Meal Title' : 'اسم الوجبة'}
-                        sortable
-                        filter
-                        filterPlaceholder={lang === 'en' ? 'Search by Meal Title' : 'ابحث بالاسم'}
-                        style={{ whiteSpace: 'nowrap' }}
-                    />
-                    <Column
-                        field="mealType"
-                        header={lang === 'en' ? 'Meal Type' : 'نوع الوجبة'}
-                        sortable
-                        filter
-                        filterPlaceholder={lang === 'en' ? 'Search by Meal Type' : 'ابحث بالنوع'}
-                        style={{ whiteSpace: 'nowrap' }}
-                        // SHOW THE MEAL TYPE AS A TAG
-                        body={(rowData) => {
-                            return (
-                                <Tag value={rowData.mealType} severity="info" />
-                            );
-                        }}
-                    />
-                    <Column
-                        field="mealBlocked"
-                        header={lang === 'en' ? 'Blocked' : 'محظور'}
-                        sortable
-                        filter
-                        filterPlaceholder={lang === 'en' ? 'Search by Blocked' : 'ابحث بالحظر'}
-                        style={{ whiteSpace: 'nowrap' }}
-                        // SHOW THE BLOCKED AS A CHECK MARK
-                        body={(rowData) => {
-                            return (
-                                <div>
-                                    <Tag
-                                        value={rowData.mealBlocked ? (lang === 'en' ? 'Blocked' : 'محظور') : (lang === 'en' ? 'Not Blocked' : 'غير محظور')}
-                                        severity={rowData.mealBlocked ? 'danger' : 'success'} />
-                                </div>
-                            );
-                        }}
-                    />
-                </DataTable>
-            </Dialog>
         </>
     );
 }

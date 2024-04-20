@@ -21,6 +21,12 @@ export default function CouponsList({ lang }) {
 
     // EFFECT TO FETCH DATA
     useEffect(() => {
+        // API CALL /coupons
+        getCoupons();
+    }, []);
+
+    // GET THE COUPONS HANDLER
+    const getCoupons = () => {
         // GET THE TOKEN FROM LOCAL STORAGE
         const token = localStorage.getItem('token');
 
@@ -31,13 +37,15 @@ export default function CouponsList({ lang }) {
             }
         })
             .then(res => {
-                setCoupons(res.data);
+                setCoupons(res.data?.data?.coupons || []);
             })
             .catch(err => {
                 console.log(err);
                 toast.error(lang === 'en' ? 'Failed to fetch coupons' : 'فشل في جلب الكوبونات');
             });
-    }, []);
+    }
+
+
 
     // EDIT COUPON
     const editCoupon = (coupon) => {
@@ -60,9 +68,10 @@ export default function CouponsList({ lang }) {
             }
         })
             .then(res => {
-                setCoupons(res.data);
                 setSelectedCouponToEdit(null);
                 toast.success(lang === 'en' ? 'Coupon status changed successfully' : 'تم تغيير حالة الكوبون بنجاح');
+                // REFRESH THE COUPONS
+                getCoupons();
             })
             .catch(err => {
                 console.log(err);
@@ -91,9 +100,10 @@ export default function CouponsList({ lang }) {
             }
         })
             .then(res => {
-                setCoupons(res.data);
                 setSelectedCouponToDelete(null);
                 toast.success(lang === 'en' ? 'Coupon deleted successfully' : 'تم حذف الكوبون بنجاح');
+                // REFRESH THE COUPONS
+                getCoupons();
             })
             .catch(err => {
                 console.log(err);
@@ -108,106 +118,7 @@ export default function CouponsList({ lang }) {
                 <DataTable
                     dir={lang === 'en' ? 'ltr' : 'rtl'}
                     // value={coupons || []}
-                    value={[
-                        {
-                            _id: '1',
-                            couponText: 'COUPON1',
-                            discountType: 'amount',
-                            discountAmount: 10,
-                            hasExpiry: true,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: true,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '2',
-                            couponText: 'COUPON2',
-                            discountType: 'ratio',
-                            discountAmount: 10,
-                            hasExpiry: false,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: false,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '3',
-                            couponText: 'COUPON3',
-                            discountType: 'amount',
-                            discountAmount: 10,
-                            hasExpiry: true,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: true,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '4',
-                            couponText: 'COUPON4',
-                            discountType: 'ratio',
-                            discountAmount: 10,
-                            hasExpiry: false,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: false,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '5',
-                            couponText: 'COUPON5',
-                            discountType: 'amount',
-                            discountAmount: 10,
-                            hasExpiry: true,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: true,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '6',
-                            couponText: 'COUPON6',
-                            discountType: 'ratio',
-                            discountAmount: 10,
-                            hasExpiry: false,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: false,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '7',
-                            couponText: 'COUPON7',
-                            discountType: 'amount',
-                            discountAmount: 10,
-                            hasExpiry: true,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: true,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '8',
-                            couponText: 'COUPON8',
-                            discountType: 'ratio',
-                            discountAmount: 10,
-                            hasExpiry: false,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: false,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        },
-                        {
-                            _id: '9',
-                            couponText: 'COUPON9',
-                            discountType: 'amount',
-                            discountAmount: 10,
-                            hasExpiry: true,
-                            expiryDate: '2022-01-01',
-                            hasUsageNumber: true,
-                            usageNumber: 10,
-                            numberOfCodes: 10
-                        }]}
+                    value={coupons || []}
                     paginator
                     rows={25}
                     rowsPerPageOptions={[25, 50, 100]}
@@ -226,7 +137,6 @@ export default function CouponsList({ lang }) {
                         style={{ whiteSpace: 'nowrap' }}
                         // SHOW THE INDEX
                         body={(rowData, index) => {
-                            console.log(rowData, index);
                             return (
                                 <div>
                                     {index.rowIndex + 1}
@@ -235,7 +145,7 @@ export default function CouponsList({ lang }) {
                         }}
                     />
                     <Column
-                        field="couponText"
+                        field="couponCode"
                         header={lang === 'en' ? 'Coupon Text' : 'نص الكوبون'}
                         sortable
                         filter
@@ -247,12 +157,12 @@ export default function CouponsList({ lang }) {
                                 <div className={'flex justify-between'}>
                                     <p
                                         onClick={() => {
-                                            navigator.clipboard.writeText(rowData.couponText);
+                                            navigator.clipboard.writeText(rowData.couponCode);
                                             toast.success(lang === 'en' ? 'Copied to clipboard' : 'تم النسخ إلى الحافظة');
                                         }}
                                         style={{ cursor: 'pointer', color: '#6f3ee6', fontWeight: 'bold' }}
                                     >
-                                        {rowData.couponText}
+                                        {rowData.couponCode}
                                     </p>
                                 </div>
                             );
@@ -314,6 +224,17 @@ export default function CouponsList({ lang }) {
                         filter
                         filterPlaceholder={lang === 'en' ? 'Search by Expiry Date' : 'ابحث بتاريخ الانتهاء'}
                         style={{ whiteSpace: 'nowrap' }}
+                        body={(rowData) => {
+                            return (
+                                <div>
+                                    {rowData.expiryDate ? new Date(rowData.expiryDate).toLocaleDateString('ar-EG', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: '2-digit'
+                                    }) : 'N/A'}
+                                </div>
+                            );
+                        }}
                     />
                     <Column
                         field="hasUsageNumber"
@@ -346,6 +267,22 @@ export default function CouponsList({ lang }) {
                         filter
                         filterPlaceholder={lang === 'en' ? 'Search by Number of Codes' : 'ابحث بعدد الكودات'}
                         style={{ whiteSpace: 'nowrap' }}
+                    />
+                    <Column
+                        field="expired"
+                        header={lang === 'en' ? 'Expired' : 'منتهي'}
+                        sortable
+                        filter
+                        filterPlaceholder={lang === 'en' ? 'Search by Expired' : 'ابحث بمنتهي'}
+                        style={{ whiteSpace: 'nowrap' }}
+                        // SHOW THE EXPIRED AS A CHECK MARK
+                        body={(rowData) => {
+                            return (
+                                <div>
+                                    {rowData.expired ? <Tag value={lang === 'en' ? 'Expired' : 'منتهي'} severity={'danger'} style={{ fontSize: '12px', fontWeight: '400' }} /> : <Tag value={lang === 'en' ? 'Active' : 'نشط'} severity={'success'} style={{ fontSize: '12px', fontWeight: '400' }} />}
+                                </div>
+                            );
+                        }}
                     />
                     {/*  ACTIONS  */}
                     <Column

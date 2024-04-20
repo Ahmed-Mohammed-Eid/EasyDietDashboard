@@ -12,6 +12,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import isValidImageUrl from '../../../../../helpers/isValidImageUrl';
 
 export default function MealsList({ lang }) {
 
@@ -275,10 +276,15 @@ export default function MealsList({ lang }) {
                             <div className="font-bold mb-2">{lang === 'en' ? 'Image' : 'صورة'}</div>
                             <div>
                                 <Image
-                                    src={selectedMealToView?.imagePath}
+                                    src={isValidImageUrl(selectedMealToView?.imagePath) ? selectedMealToView?.imagePath : '/assets/404.jpg'}
                                     alt={selectedMealToView?.mealTitle}
                                     width={200}
                                     height={200}
+                                    style={{
+                                        borderRadius: '10px',
+                                        objectFit: 'cover',
+                                        border: '1px solid #ccc'
+                                    }}
                                 />
                             </div>
                         </div>

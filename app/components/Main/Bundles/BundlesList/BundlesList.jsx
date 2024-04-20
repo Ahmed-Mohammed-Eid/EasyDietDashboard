@@ -12,6 +12,7 @@ import { toast } from 'react-hot-toast';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import isValidImageUrl from '../../../../../helpers/isValidImageUrl';
 
 export default function BundlesList({ lang }) {
 
@@ -65,7 +66,7 @@ export default function BundlesList({ lang }) {
                 Authorization: `Bearer ${token}`
             },
             data: {
-                bundleId: selectedBundleToDelete._id
+                bundleId: selectedBundleToDelete?._id
             }
         })
             .then(_ => {
@@ -103,7 +104,8 @@ export default function BundlesList({ lang }) {
                         body={(rowData) => {
                             return (
                                 <Image
-                                    src={rowData.bundleImageMale}
+                                    src={isValidImageUrl(rowData.bundleImageMale) ? rowData.bundleImageMale : '/assets/404.jpg'}
+                                    // src={rowData.bundleImageMale}
                                     alt={rowData.bundleName}
                                     width={50}
                                     height={50}
@@ -127,7 +129,7 @@ export default function BundlesList({ lang }) {
                         body={(rowData) => {
                             return (
                                 <Image
-                                    src={rowData.bundleImageFemale}
+                                    src={isValidImageUrl(rowData.bundleImageFemale) ? rowData.bundleImageFemale : '/assets/404.jpg'}
                                     alt={rowData.bundleName}
                                     width={50}
                                     height={50}
@@ -285,7 +287,8 @@ export default function BundlesList({ lang }) {
                             <div className="font-bold mb-2">{lang === 'en' ? 'Bundle Male Image' : 'صورة الذكر'}</div>
                             <div>
                                 <Image
-                                    src={selectedBundleToView?.bundleImageMale}
+                                    // src={selectedBundleToView?.bundleImageMale}
+                                    src={isValidImageUrl(selectedBundleToView?.bundleImageMale) ? selectedBundleToView?.bundleImageMale : '/assets/404.jpg'}
                                     alt={selectedBundleToView?.bundleName}
                                     width={100}
                                     height={100}
@@ -305,7 +308,8 @@ export default function BundlesList({ lang }) {
                             <div className="font-bold mb-2">{lang === 'en' ? 'Bundle Female Image' : 'صورة الأنثى'}</div>
                             <div>
                                 <Image
-                                    src={selectedBundleToView?.bundleImageFemale}
+                                    // src={selectedBundleToView?.bundleImageFemale}
+                                    src={isValidImageUrl(selectedBundleToView?.bundleImageFemale) ? selectedBundleToView?.bundleImageFemale : '/assets/404.jpg'}
                                     alt={selectedBundleToView?.bundleName}
                                     width={100}
                                     height={100}

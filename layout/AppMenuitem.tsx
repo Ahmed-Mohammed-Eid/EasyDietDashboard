@@ -17,12 +17,11 @@ const AppMenuitem = (props: AppMenuItemProps) => {
     const item = props.item;
     const key = props.parentKey ? props.parentKey + '-' + props.index : String(props.index);
 
-    // NEW PATH USING LANGUAGE
-    const newLangPath = `${props.lang === 'en' ? '' : '/ar'}${item!.to === '/' ? '' : item!.to}`;
-    console.log('newLangPath', newLangPath);
-    console.log('pathname', pathname);
+    // CHECK IF THE item!.to equals to the current so if the item!.to is the same of pathname without the language [en || ar] it will be active
+    const replaced = pathname.replace(/\/(en|ar)/, '');
 
-    const isActiveRoute = (item!.to && pathname === `${newLangPath}`);
+    const isActiveRoute = item!.to === pathname || item!.to === replaced || item!.to === replaced + '/'
+
     const active = activeMenu === key || activeMenu.startsWith(key + '-');
     const onRouteChange = (url: string) => {
         if (item!.to && item!.to === url) {

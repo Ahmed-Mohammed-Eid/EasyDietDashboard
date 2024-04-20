@@ -69,7 +69,7 @@ const AppConfig = (props) => {
         // SET THE LANGUAGE TO THE LOCAL STORAGE
         localStorage.setItem('language', lang);
         // SET THE LANGUAGE TO THE COOKIES
-        document.cookie = `language=${lang} path=/`;
+        document.cookie = `language=${lang}`;
         // get the path without the language
         const parts = pathname.split('/');
         parts[1] = lang;
@@ -93,10 +93,17 @@ const AppConfig = (props) => {
     useEffect(() => {
         // GET THE LANGUAGE FROM THE LOCAL STORAGE
         const language = localStorage.getItem('language');
-        // SET THE LANGUAGE TO THE LOCAL STORAGE
-        localStorage.setItem('language', language);
-        // SET THE LANGUAGE TO THE COOKIES
-        document.cookie = `language=${language}`;
+        // GET THE LANGUAGE FROM THE COOKIES
+        const cookies = document.cookie.split(';');
+        const cookie = cookies.find((item) => item.includes('language'));
+        const cookieValue = cookie?.split('=')[1];
+
+        if(!language || !cookieValue) {
+            // SET THE LANGUAGE TO THE LOCAL STORAGE
+            localStorage.setItem('language', 'en');
+            // SET THE LANGUAGE TO THE COOKIES
+            document.cookie = `language=${'en'}`;
+        }
     }, []);
 
     return (

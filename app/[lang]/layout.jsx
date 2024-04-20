@@ -8,7 +8,7 @@ import 'primeflex/primeflex.css';
 import 'primeicons/primeicons.css';
 import '../../styles/layout/layout.scss';
 import '../../styles/globals.scss';
-// PRIME REACT ARAIC THEME
+// PRIME REACT ARABIC THEME
 import '../../styles/primeReactArabicStyle.scss';
 
 function RootLayout({ children, params: {lang} }) {

@@ -48,10 +48,8 @@ export default function AddCategoryForm({ lang }) {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    toast.success(lang === 'en' ? 'Category added successfully' : 'تمت إضافة القسم بنجاح');
-                }
+            .then(_ => {
+                toast.success(lang === 'en' ? 'Category added successfully' : 'تمت إضافة القسم بنجاح');
             })
             .catch(err => {
                 console.log(err);
