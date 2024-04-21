@@ -26,8 +26,6 @@ export default function MealsAddForm({ lang }) {
     const [fats, setFats] = useState('');
     const [calories, setCalories] = useState('');
     const [description, setDescription] = useState('');
-    const [numberOfSelection, setNumberOfSelection] = useState('');
-    const [selectionPeriod, setSelectionPeriod] = useState('');
     const [file, setFile] = useState('');
 
     // HANDLERS
@@ -44,19 +42,22 @@ export default function MealsAddForm({ lang }) {
             return toast.error(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
         }
 
+
         // FORM DATA
         const formData = new FormData();
         formData.append('mealTitle', mealTitle);
         formData.append('mealTitleEn', mealTitleEn);
-        formData.append('mealTypes', mealType.join(','));
         formData.append('protine', protine);
         formData.append('carbohydrates', carbohydrates);
         formData.append('fats', fats);
         formData.append('calories', calories);
         formData.append('description', description);
-        formData.append('numberOfSelection', numberOfSelection);
-        formData.append('selectionPeriod', selectionPeriod);
-        formData.append('file', file);
+        formData.append('files', file);
+
+        // LOOP THROUGH THE MEAL TYPES AND APPEND THEM TO THE FORM DATA
+        mealType.forEach(type => {
+            formData.append('mealTypes[]', type);
+        })
 
         // API CALL /create/meal
         axios.post(`${process.env.API_URL}/create/meal`, formData, {
@@ -64,10 +65,8 @@ export default function MealsAddForm({ lang }) {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    toast.success(lang === 'en' ? 'Meal added successfully' : 'تمت إضافة الوجبة بنجاح');
-                }
+            .then(_ => {
+                toast.success(lang === 'en' ? 'Meal added successfully' : 'تمت إضافة الوجبة بنجاح');
             })
             .catch(err => {
                 console.log(err);
@@ -157,23 +156,6 @@ export default function MealsAddForm({ lang }) {
                                 height: '150px',
                                 resize: 'none'
                             }}
-                        />
-                    </div>
-                    <div className={'field col-12 md:col-6'}>
-                        <label
-                            htmlFor="numberOfSelection">{lang === 'en' ? 'Number of Selection' : 'عدد الاختيارات'}</label>
-                        <InputNumber
-                            id="numberOfSelection"
-                            value={numberOfSelection}
-                            onChange={(e) => setNumberOfSelection(e.value)}
-                        />
-                    </div>
-                    <div className={'field col-12 md:col-6'}>
-                        <label htmlFor="selectionPeriod">{lang === 'en' ? 'Selection Period' : 'فترة الاختيار'}</label>
-                        <InputNumber
-                            id="selectionPeriod"
-                            value={selectionPeriod}
-                            onChange={(e) => setSelectionPeriod(e.value)}
                         />
                     </div>
                     <div className={'field col-12'} dir={'ltr'}>

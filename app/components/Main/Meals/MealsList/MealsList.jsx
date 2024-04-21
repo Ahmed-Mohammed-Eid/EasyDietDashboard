@@ -27,6 +27,11 @@ export default function MealsList({ lang }) {
 
     // EFFECT TO FETCH DATA
     useEffect(() => {
+        getMeals();
+    }, [lang]);
+
+    // GET MEALS HANDLER
+    const getMeals = () => {
         // GET THE TOKEN FROM LOCAL STORAGE
         const token = localStorage.getItem('token');
 
@@ -37,45 +42,14 @@ export default function MealsList({ lang }) {
             }
         })
             .then(res => {
-                const meals = res.data?.data?.meals || [];
+                const meals = res.data?.meals || [];
                 setMeals(meals);
             })
             .catch(err => {
                 console.log(err);
                 toast.error(lang === 'en' ? 'Failed to fetch meals' : 'فشل في جلب الوجبات');
             });
-    }, [lang]);
-
-    // EDIT MEAL
-    const editMeal = (meal) => {
-        // GET THE TOKEN FROM LOCAL STORAGE
-        const token = localStorage.getItem('token');
-
-        // VALIDATE THE MEAL
-        if (!meal) {
-            toast.error(lang === 'en' ? 'Meal not found' : 'الوجبة غير موجود');
-            return;
-        }
-
-        // API CALL /meals
-        axios.put(`${process.env.API_URL}/set/meal/expired`, {
-            mealId: selectedMealToEdit._id,
-            status: !selectedMealToEdit.status
-        }, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(res => {
-                setMeals(res.data);
-                setSelectedMealToEdit(null);
-                toast.success(lang === 'en' ? 'Meal status changed successfully' : 'تم تغيير حالة الوجبة بنجاح');
-            })
-            .catch(err => {
-                console.log(err);
-                toast.error(lang === 'en' ? 'Failed to change meal status' : 'فشل في تغيير حالة الوجبة');
-            });
-    };
+    }
 
     // DELETE MEAL
     const deleteMeal = (meal) => {
@@ -93,14 +67,17 @@ export default function MealsList({ lang }) {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            data: {
+            params: {
                 mealId: selectedMealToDelete._id
             }
         })
             .then(res => {
-                setMeals(res.data);
                 setSelectedMealToDelete(null);
                 toast.success(lang === 'en' ? 'Meal deleted successfully' : 'تم حذف الوجبة بنجاح');
+
+                // REFRESH THE DATA
+                getMeals();
+
             })
             .catch(err => {
                 console.log(err);

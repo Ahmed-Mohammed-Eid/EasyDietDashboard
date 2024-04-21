@@ -7,7 +7,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import { InputNumber } from 'primereact/inputnumber';
 import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
-import {InputSwitch} from 'primereact/inputswitch';
+import { InputSwitch } from 'primereact/inputswitch';
 
 // IMPORTS
 import CustomFileUpload from '../../Layout/customFileUpload/customFileUpload';
@@ -27,8 +27,6 @@ export default function MealsEditForm({ lang, id }) {
     const [fats, setFats] = useState('');
     const [calories, setCalories] = useState('');
     const [description, setDescription] = useState('');
-    const [numberOfSelection, setNumberOfSelection] = useState('');
-    const [selectionPeriod, setSelectionPeriod] = useState('');
     const [blocked, setBlocked] = useState(false);
     const [file, setFile] = useState('');
 
@@ -40,40 +38,43 @@ export default function MealsEditForm({ lang, id }) {
         // GET THE TOKEN FROM LOCAL STORAGE
         const token = localStorage.getItem('token');
 
-
         // VALIDATE
-        if (!mealText || !discountAmount || !numberOfCodes || (hasExpiry && !expiryDate) || (hasUsageNumber && !usageNumber)) {
-            alert(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
+        if (!mealTitle || !mealTitleEn || !mealType || !protine || !carbohydrates || !fats || !calories) {
             return toast.error(lang === 'en' ? 'Please fill all required fields' : 'يرجى ملء جميع الحقول المطلوبة');
         }
 
-        // SUBMIT
-        const data = {
-            mealText,
-            discountType,
-            discountAmount,
-            hasExpiry,
-            expiryDate,
-            hasUsageNumber,
-            usageNumber,
-            numberOfCodes
-        };
+        // FORM DATA
+        const formData = new FormData();
+        formData.append('mealId', id);
+        formData.append('mealTitle', mealTitle);
+        formData.append('mealTitleEn', mealTitleEn);
+        formData.append('mealType', mealType);
+        formData.append('protine', protine);
+        formData.append('carbohydrates', carbohydrates);
+        formData.append('fats', fats);
+        formData.append('calories', calories);
+        formData.append('description', description);
+        formData.append('files', file);
+        formData.append('mealBlocked', blocked);
 
-        // API CALL /create/meals
-        axios.post(`${process.env.API_URL}/create/meals`, data, {
+        if (file) {
+            formData.append('files', file);
+        }
+
+        // API CALL /update/meal
+        axios.put(`${process.env.API_URL}/edit/meal`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    toast.success(lang === 'en' ? 'Meal added successfully' : 'تمت إضافة الوجبة بنجاح');
-                }
+            .then(_ => {
+                toast.success(lang === 'en' ? 'Meal updated successfully' : 'تم تحديث الوجبة بنجاح');
             })
             .catch(err => {
                 console.log(err);
                 toast.error(lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
             });
+
     }
 
     // EFFECT TO GET THE MEAL DATA
@@ -98,8 +99,6 @@ export default function MealsEditForm({ lang, id }) {
                     setFats(meal.fats);
                     setCalories(meal.calories);
                     setDescription(meal.description);
-                    setNumberOfSelection(meal.selectionRule?.redundancy);
-                    setSelectionPeriod(meal.selectionRule?.period);
                     setBlocked(meal.mealBlocked);
                 }
             })
@@ -193,29 +192,16 @@ export default function MealsEditForm({ lang, id }) {
                             }}
                         />
                     </div>
-                    <div className={'field col-12 md:col-6'}>
-                        <label
-                            htmlFor="numberOfSelection">{lang === 'en' ? 'Number of Selection' : 'عدد الاختيارات'}</label>
-                        <InputNumber
-                            id="numberOfSelection"
-                            value={numberOfSelection}
-                            onChange={(e) => setNumberOfSelection(e.value)}
-                        />
-                    </div>
-                    <div className={'field col-12 md:col-6'}>
-                        <label htmlFor="selectionPeriod">{lang === 'en' ? 'Selection Period' : 'فترة الاختيار'}</label>
-                        <InputNumber
-                            id="selectionPeriod"
-                            value={selectionPeriod}
-                            onChange={(e) => setSelectionPeriod(e.value)}
-                        />
-                    </div>
                     <div className={'field col-12'} dir={'ltr'}>
-                        <label dir={lang === 'en' ? 'ltr' : 'rtl'} style={{ textAlign: lang === 'en' ? 'left' : 'right' }} htmlFor="file">{lang === 'en' ? 'Meal Image' : 'صورة الوجبة'}</label>
+                        <label dir={lang === 'en' ? 'ltr' : 'rtl'}
+                               style={{ textAlign: lang === 'en' ? 'left' : 'right' }}
+                               htmlFor="file">{lang === 'en' ? 'Meal Image' : 'صورة الوجبة'}</label>
                         <CustomFileUpload
                             id="file"
                             file={file}
-                            setFile={setFile}
+                            multiple={false}
+                            setFiles={(files) => setFile(files[0])}
+                            removeThisItem={() => setFile('')}
                         />
                     </div>
                     <div className={'field col-12 flex flex-column'}>
@@ -230,7 +216,7 @@ export default function MealsEditForm({ lang, id }) {
             </div>
             <div className={'flex justify-center mt-5'}>
                 <Button
-                    label={lang === 'en' ? 'Add Meal' : 'تعديل الوجبة'}
+                    label={lang === 'en' ? 'Edit Meal' : 'تعديل الوجبة'}
                     icon="pi pi-plus"
                     style={{
                         width: '100%',

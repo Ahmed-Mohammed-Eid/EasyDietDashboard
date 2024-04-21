@@ -37,7 +37,7 @@ export default function CouponsList({ lang }) {
             }
         })
             .then(res => {
-                setCoupons(res.data?.data?.coupons || []);
+                setCoupons(res.data?.coupons || []);
             })
             .catch(err => {
                 console.log(err);
@@ -61,7 +61,7 @@ export default function CouponsList({ lang }) {
         // API CALL /coupons
         axios.put(`${process.env.API_URL}/set/coupon/expired`, {
             couponId: selectedCouponToEdit._id,
-            status: !selectedCouponToEdit.status
+            status: !selectedCouponToEdit.expired
         },{
             headers: {
                 Authorization: `Bearer ${token}`
@@ -95,7 +95,7 @@ export default function CouponsList({ lang }) {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            data: {
+            params: {
                 couponId: selectedCouponToDelete._id
             }
         })
@@ -261,14 +261,6 @@ export default function CouponsList({ lang }) {
                         style={{ whiteSpace: 'nowrap' }}
                     />
                     <Column
-                        field="numberOfCodes"
-                        header={lang === 'en' ? 'Number of Codes' : 'عدد الكودات'}
-                        sortable
-                        filter
-                        filterPlaceholder={lang === 'en' ? 'Search by Number of Codes' : 'ابحث بعدد الكودات'}
-                        style={{ whiteSpace: 'nowrap' }}
-                    />
-                    <Column
                         field="expired"
                         header={lang === 'en' ? 'Expired' : 'منتهي'}
                         sortable
@@ -293,7 +285,7 @@ export default function CouponsList({ lang }) {
                                         className={'AMB_btn AMB_btn-primary'}
                                         onClick={() => setSelectedCouponToEdit(rowData)}
                                     >
-                                        {lang === 'en' ? 'Edit' : 'تعديل'}
+                                        {lang === 'en' ? 'Change Status' : 'تغيير الحالة'}
                                     </button>
                                     <button
                                         className={'AMB_btn AMB_btn-danger'}

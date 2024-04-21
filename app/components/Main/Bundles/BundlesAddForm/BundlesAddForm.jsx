@@ -78,6 +78,8 @@ export default function BundlesAddForm({ lang }) {
         // FORM DATA
         const formData = new FormData();
 
+        // APPEND DATA
+        formData.append('categoryId', categoryId);
         formData.append('bundleName', bundleName);
         formData.append('bundleNameEn', bundleNameEn);
         formData.append('mealsNumber', mealsNumber);
@@ -259,8 +261,8 @@ export default function BundlesAddForm({ lang }) {
                         </div>
 
                         {/* FRIDAY OPTION */}
-                        <div className={'field col-12 md:col-6 flex flex-column align-items-center'}>
-                            <label htmlFor="fridayOption">{lang === 'en' ? 'Friday Option' : 'خيار الجمعة'}</label>
+                        <div className={'field col-12 md:col-6 flex flex-column mb-4 mt-4'}>
+                            <label htmlFor="fridayOption" className='font-bold'>{lang === 'en' ? 'Friday Option' : 'خيار الجمعة'}</label>
                             <InputSwitch
                                 id="fridayOption"
                                 checked={fridayOption}
@@ -270,8 +272,8 @@ export default function BundlesAddForm({ lang }) {
 
 
                         {/* Discount */}
-                        <div className={'field col-12 md:col-6 flex flex-column align-items-center'}>
-                            <label htmlFor="hasDiscount">{lang === 'en' ? 'Has Discount' : 'يوجد خصم'}</label>
+                        <div className={'field col-12 md:col-6 flex flex-column mb-4 mt-4'}>
+                            <label htmlFor="hasDiscount" className='font-bold'>{lang === 'en' ? 'Has Discount' : 'يوجد خصم'}</label>
                             <InputSwitch
                                 id="hasDiscount"
                                 checked={hasDiscount}
@@ -281,9 +283,9 @@ export default function BundlesAddForm({ lang }) {
 
                         {/* MEALS OPTIONS */}
                         <div className={'field col-12'}>
-                            <label htmlFor="mealsOptions">{lang === 'en' ? 'Meals Options' : 'خيارات الوجبات'}</label>
+                            <label htmlFor="mealsOptions" className='font-bold mb-4'>{lang === 'en' ? 'Meals Options' : 'خيارات الوجبات'}</label>
                             <div className={'p-fluid formgrid grid'}>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="breakfast"
@@ -294,7 +296,7 @@ export default function BundlesAddForm({ lang }) {
                                         <label htmlFor="breakfast">{lang === 'en' ? 'Breakfast' : 'فطور'}</label>
                                     </div>
                                 </div>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="lunch"
@@ -305,7 +307,7 @@ export default function BundlesAddForm({ lang }) {
                                         <label htmlFor="lunch">{lang === 'en' ? 'Lunch' : 'غداء'}</label>
                                     </div>
                                 </div>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="dinner"
@@ -314,17 +316,6 @@ export default function BundlesAddForm({ lang }) {
                                             onChange={(e) => setDinner(e.checked)}
                                         />
                                         <label htmlFor="dinner">{lang === 'en' ? 'Dinner' : 'عشاء'}</label>
-                                    </div>
-                                </div>
-                                <div className={'field col-3'}>
-                                    <div className={'flex justify-between gap-1'}>
-                                        <Checkbox
-                                            inputId="snacks"
-                                            value="Snacks"
-                                            checked={snacks}
-                                            onChange={(e) => setSnacks(e.checked)}
-                                        />
-                                        <label htmlFor="snacks">{lang === 'en' ? 'Snacks' : 'سناك'}</label>
                                     </div>
                                 </div>
                             </div>

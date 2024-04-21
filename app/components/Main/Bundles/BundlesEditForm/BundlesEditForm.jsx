@@ -46,6 +46,9 @@ export default function BundlesEditForm({ lang, id }) {
     const [hasDiscount, setHasDiscount] = useState(false);
     const [discountAmount, setDiscountAmount] = useState(0);
     const [discountType, setDiscountType] = useState('ratio');
+    // DEACTIVATE OPTION FOR THE BUNDLE (IF THE BUNDLE IS DEACTIVATED, IT WILL NOT BE SHOWN IN THE WEBSITE)
+    const [deactivateOption, setDeactivateOption] = useState(false);
+
     // IMAGES
     const [maleImage, setMaleImage] = useState('');
     const [femaleImage, setFemaleImage] = useState('');
@@ -78,6 +81,9 @@ export default function BundlesEditForm({ lang, id }) {
         // FORM DATA
         const formData = new FormData();
 
+        // APPEND DATA
+        formData.append('bundleId', id);
+        formData.append('categoryId', categoryId);
         formData.append('bundleName', bundleName);
         formData.append('bundleNameEn', bundleNameEn);
         formData.append('mealsNumber', mealsNumber);
@@ -91,6 +97,8 @@ export default function BundlesEditForm({ lang, id }) {
         formData.append('bundlePrice', bundlePrice);
         formData.append('timeOnCard', timeOnCard);
         formData.append('timeOnCardEn', timeOnCardEn);
+        // DEACTIVATE OPTION
+        formData.append('deActivate', deactivateOption);
 
         // DISCOUNT
         formData.append('hasDiscount', hasDiscount);
@@ -109,7 +117,7 @@ export default function BundlesEditForm({ lang, id }) {
             }
         })
             .then(_ => {
-                toast.success(lang === 'en' ? 'Bundle added successfully' : 'تم تعديل الباقة بنجاح');
+                toast.success(lang === 'en' ? 'Bundle Updated successfully' : 'تم تعديل الباقة بنجاح');
             })
             .catch(err => {
                 toast.error(lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
@@ -146,10 +154,11 @@ export default function BundlesEditForm({ lang, id }) {
                 setBundleOffer(bundle.bundleOffer);
                 setFridayOption(bundle.fridayOption);
                 setBundlePrice(bundle.bundlePrice);
-                setCategoryId(bundle.categoryId);
+                setCategoryId(bundle.categoryId._id);
                 setHasDiscount(bundle.hasDiscount);
                 setDiscountAmount(bundle.discountAmount);
                 setDiscountType(bundle.discountType);
+                setDeactivateOption(bundle.deActivate);
             })
             .catch(err => {
                 console.log(err);
@@ -301,8 +310,8 @@ export default function BundlesEditForm({ lang, id }) {
                         </div>
 
                         {/* FRIDAY OPTION */}
-                        <div className={'field col-12 md:col-6 flex flex-column align-items-center'}>
-                            <label htmlFor="fridayOption">{lang === 'en' ? 'Friday Option' : 'خيار الجمعة'}</label>
+                        <div className={'field col-12 md:col-4 flex flex-column mb-6'}>
+                            <label htmlFor="fridayOption" className='font-bold mb-4 mt-4'>{lang === 'en' ? 'Friday Option' : 'خيار الجمعة'}</label>
                             <InputSwitch
                                 id="fridayOption"
                                 checked={fridayOption}
@@ -312,8 +321,8 @@ export default function BundlesEditForm({ lang, id }) {
 
 
                         {/* Discount */}
-                        <div className={'field col-12 md:col-6 flex flex-column align-items-center'}>
-                            <label htmlFor="hasDiscount">{lang === 'en' ? 'Has Discount' : 'يوجد خصم'}</label>
+                        <div className={'field col-12 md:col-4 flex flex-column mb-6'}>
+                            <label htmlFor="hasDiscount" className='font-bold mb-4 mt-4'>{lang === 'en' ? 'Has Discount' : 'يوجد خصم'}</label>
                             <InputSwitch
                                 id="hasDiscount"
                                 checked={hasDiscount}
@@ -321,11 +330,21 @@ export default function BundlesEditForm({ lang, id }) {
                             />
                         </div>
 
+                        {/* DEACTIVATE OPTION */}
+                        <div className={'field col-12 md:col-4 flex flex-column mb-6'}>
+                            <label htmlFor="deactivateOption" className='font-bold mb-4 mt-4'>{lang === 'en' ? 'Deactivate Option' : 'خيار تعطيل'}</label>
+                            <InputSwitch
+                                id="deactivateOption"
+                                checked={deactivateOption}
+                                onChange={(e) => setDeactivateOption(e.value)}
+                            />
+                        </div>
+
                         {/* MEALS OPTIONS */}
                         <div className={'field col-12'}>
-                            <label htmlFor="mealsOptions">{lang === 'en' ? 'Meals Options' : 'خيارات الوجبات'}</label>
+                            <label htmlFor="mealsOptions" className='font-bold mb-4'>{lang === 'en' ? 'Meals Options' : 'خيارات الوجبات'}</label>
                             <div className={'p-fluid formgrid grid'}>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="breakfast"
@@ -336,7 +355,7 @@ export default function BundlesEditForm({ lang, id }) {
                                         <label htmlFor="breakfast">{lang === 'en' ? 'Breakfast' : 'فطور'}</label>
                                     </div>
                                 </div>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="lunch"
@@ -347,7 +366,7 @@ export default function BundlesEditForm({ lang, id }) {
                                         <label htmlFor="lunch">{lang === 'en' ? 'Lunch' : 'غداء'}</label>
                                     </div>
                                 </div>
-                                <div className={'field col-3'}>
+                                <div className={'field col-4'}>
                                     <div className={'flex justify-between gap-1'}>
                                         <Checkbox
                                             inputId="dinner"
@@ -356,17 +375,6 @@ export default function BundlesEditForm({ lang, id }) {
                                             onChange={(e) => setDinner(e.checked)}
                                         />
                                         <label htmlFor="dinner">{lang === 'en' ? 'Dinner' : 'عشاء'}</label>
-                                    </div>
-                                </div>
-                                <div className={'field col-3'}>
-                                    <div className={'flex justify-between gap-1'}>
-                                        <Checkbox
-                                            inputId="snacks"
-                                            value="Snacks"
-                                            checked={snacks}
-                                            onChange={(e) => setSnacks(e.checked)}
-                                        />
-                                        <label htmlFor="snacks">{lang === 'en' ? 'Snacks' : 'سناك'}</label>
                                     </div>
                                 </div>
                             </div>

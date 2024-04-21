@@ -65,7 +65,7 @@ export default function BundlesList({ lang }) {
             headers: {
                 Authorization: `Bearer ${token}`
             },
-            data: {
+            params: {
                 bundleId: selectedBundleToDelete?._id
             }
         })
@@ -162,6 +162,22 @@ export default function BundlesList({ lang }) {
                         filterPlaceholder={lang === 'en' ? 'Search by Bundle Title' : 'ابحث بالاسم'}
                         style={{ whiteSpace: 'nowrap' }}
                     />
+                    {/* BUNDLE STATUS */}
+                    <Column
+                        field="deActivate"
+                        header={lang === 'en' ? 'Status' : 'الحالة'}
+                        sortable
+                        filter
+                        filterPlaceholder={lang === 'en' ? 'Search by Status' : 'ابحث بالحالة'}
+                        style={{ whiteSpace: 'nowrap' }}
+                        body={(rowData) => {
+                            console.log(rowData);
+                            return (
+                                <Tag value={lang === 'en' ? rowData.deActivate ? 'Deactivated' : 'Activated' : rowData.deActivate ? 'تم تعطيلها' : 'تم تفعيلها'} severity={rowData.deActivate  ? 'danger' : 'success'}/>
+                            );
+                        }}
+                    />
+                    
                     <Column
                         field="bundlePrice"
                         header={lang === 'en' ? 'Price' : 'السعر'}
@@ -259,7 +275,7 @@ export default function BundlesList({ lang }) {
                     dir={lang === 'en' ? 'ltr' : 'rtl'}
                 >
                     <div className={'flex justify-center'}>
-                        <p>{lang === 'en' ? 'Are you sure you want to delete this bundle?' : 'هل أنت متأكد أنك تريد حذف هذا الباقة؟'}</p>
+                        <p>{lang === 'en' ? 'Are you sure you want to delete this bundle?' : 'هل أنت متأكد أنك تريد حذف هذه الباقة؟'}</p>
                     </div>
                 </Dialog>
 
@@ -404,6 +420,12 @@ export default function BundlesList({ lang }) {
                                     selectedBundleToView?.bundlePeriod === 4 ? lang === 'en' ? '4 Weeks' : '4 أسابيع' : ''
                                 }
                             </div>
+                        </div>
+
+                        {/*  bundleStatus  */}
+                        <div className="col-6">
+                            <div className="font-bold mb-2">{lang === 'en' ? 'Status' : 'الحالة'}</div>
+                            <Tag value={lang === 'en' ? selectedBundleToView?.deActivate ? 'Deactivated' : 'Activated' : selectedBundleToView?.deActivate ? 'تم تعطيلها' : 'تم تفعيلها'} severity={selectedBundleToView?.deActivate ? 'danger' : 'success'} />
                         </div>
 
                         {/* hasDiscount */}
