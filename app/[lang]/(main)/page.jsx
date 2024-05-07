@@ -2,14 +2,14 @@
 import React from 'react';
 import { getDictionary } from '../../dictionaries/dictionaries';
 
+import Content from '../../components/Main/Home/Content/Content';
+
 const Dashboard = async ({params: {lang}}) => {
 
     const dictionary = await getDictionary(lang);
 
     return (
-        <div className="grid">
-            <h1>{dictionary.home.welcome}</h1>
-        </div>
+        <Content dictionary={dictionary} lang={lang} />
     );
 };
 

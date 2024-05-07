@@ -20,6 +20,14 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
             items: [{ label: dictionary.sidebar.home.dashboard, icon: 'pi pi-fw pi-home', to: '/' }]
         },
         {
+            label: lang === 'en' ? 'Categories' : 'الأقسام',
+            icon: 'pi pi-fw pi-folder',
+            items: [
+                { label: lang === 'en' ? 'Categories List' : 'قائمة الأقسام', icon: 'pi pi-fw pi-list', to: '/categories' },
+                { label: lang === 'en' ? 'Add Category' : 'إضافة قسم', icon: 'pi pi-fw pi-plus', to: '/categories/add' }
+            ]
+        },
+        {
             label: lang === 'en' ? 'Meals' : 'الوجبات',
             icon: 'pi pi-fw pi-utensils',
             items: [
@@ -37,11 +45,29 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
             ]
         },
         {
-            label: lang === 'en' ? 'Categories' : 'الأقسام',
-            icon: 'pi pi-fw pi-folder',
+            label: lang === 'en' ? 'Clients' : 'العملاء',
+            icon: 'pi pi-fw pi-user',
             items: [
-                { label: lang === 'en' ? 'Categories List' : 'قائمة الأقسام', icon: 'pi pi-fw pi-list', to: '/categories' },
-                { label: lang === 'en' ? 'Add Category' : 'إضافة قسم', icon: 'pi pi-fw pi-plus', to: '/categories/add' }
+                { label: lang === 'en' ? 'Clients List' : 'قائمة العملاء', icon: 'pi pi-fw pi-list', to: '/clients' },
+                { label: lang === 'en' ? 'Add Client' : 'إضافة عميل', icon: 'pi pi-fw pi-plus', to: '/clients/add' }
+            ]
+        },
+        {
+            label: lang === 'en' ? 'Employees' : 'الموظفين',
+            icon: 'pi pi-fw pi-users',
+            items: [
+                { label: lang === 'en' ? 'Employees List' : 'قائمة الموظفين', icon: 'pi pi-fw pi-list', to: '/employee' },
+                { label: lang === 'en' ? 'Add Employee' : 'إضافة موظف', icon: 'pi pi-fw pi-plus', to: '/employee/add' }
+            ]
+        },
+        {
+            label: lang === 'en' ? 'Menus' : 'القوائم',
+            icon: 'pi pi-fw pi-book',
+            items: [
+                { label: lang === 'en' ? 'Daily Menu' : 'القوائم اليومية', icon: 'pi pi-fw pi-list', to: '/menu/daily' },
+                { label: lang === 'en' ? 'Add Daily Day' : 'إضافة للقائمة اليومية', icon: 'pi pi-fw pi-plus', to: '/menu/daily/add' },
+                { label: lang === 'en' ? 'Default Menu' : 'القائمة الافتراضية', icon: 'pi pi-fw pi-list', to: '/menu/default' },
+                { label: lang === 'en' ? 'Add Default Menu' : 'إضافة للقائمة الإفتراضية', icon: 'pi pi-fw pi-plus', to: '/menu/default/add' }
             ]
         },
         {

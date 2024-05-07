@@ -53,7 +53,7 @@ export default function ReviewsContent({ lang }) {
             }
         })
             .then(res => {
-                const meals = res.data?.data?.meals || [];
+                const meals = res.data?.meals || [];
 
                 // LOOP THROUGH THE MEALS TO MAKE A CUSTOM OBJECT FOR THE DROPDOWN
                 const mealsOptions = meals.map(meal => {
