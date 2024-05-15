@@ -78,6 +78,13 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
             ]
         },
         {
+            label: lang === 'en' ? 'Branches' : 'الفروع',
+            icon: 'pi pi-fw pi-home',
+            items: [
+                { label: lang === 'en' ? 'Branches\' Manager' : "مدير الفرع" , icon: 'pi pi-fw pi-list', to: '/branchManager' },
+            ]
+        },
+        {
             label: lang === 'en' ? 'UI Management' : 'إدارة الواجهة',
             icon: 'pi pi-fw pi-cog',
             items: [
@@ -91,6 +98,13 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
                     icon: 'pi pi-fw pi-plus',
                     to: '/ui/sliders/add'
                 }
+            ]
+        },
+        {
+            label: lang === 'en' ? 'Reports' : 'التقارير',
+            icon: 'pi pi-fw pi-chart-bar',
+            items: [
+                {label: lang === 'en' ? 'Reports List' : 'قائمة التقارير', icon: 'pi pi-fw pi-list', to: '/reports'},
             ]
         },
         {
