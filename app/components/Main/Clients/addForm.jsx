@@ -71,7 +71,7 @@ export default function AddClientForm({ lang }) {
 
         // VALIDATION
         // # CLIENT INFORMATION
-        if (!clientType || !clientName || !clientNameEn || !phoneNumber || !email || !password || !gender) {
+        if (!clientType || !clientName || !clientNameEn || !phoneNumber || !gender || (!email && clientType === 'online') || (!password && clientType === 'online')) {
             toast.error(lang === 'en' ? 'Please fill all client information fields' : 'يرجى ملء جميع حقول معلومات العميل');
             return;
         }
@@ -140,6 +140,12 @@ export default function AddClientForm({ lang }) {
         }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             .then(res => {
                 toast.success(lang === 'en' ? 'Client Added Successfully' : 'تمت إضافة العميل بنجاح');
+
+                // VALIDATION FOR CLIENT SIGNING IN
+                if (clientType === 'offline' && res.data?.credentials?.username === '' && res.data?.credentials?.password === '') {
+                    return;
+                }
+
                 // SET THE CLIENT SIGNING IN DETAILS
                 setClientSigningIn({
                     username: res.data?.credentials?.username,
@@ -258,7 +264,6 @@ export default function AddClientForm({ lang }) {
                                 id={'email'}
                                 type={'email'}
                                 placeholder={lang === 'en' ? 'Enter Email' : 'أدخل البريد الالكتروني'}
-                                required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
@@ -269,7 +274,6 @@ export default function AddClientForm({ lang }) {
                                 id={'password'}
                                 type={'password'}
                                 placeholder={lang === 'en' ? 'Enter Password' : 'أدخل كلمة المرور'}
-                                required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />

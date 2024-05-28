@@ -26,6 +26,7 @@ export default function List({ clientType = 'offline', lang }) {
     // STATE TO STORE DATA
     const [clients, setClients] = useState([]);
     const [hasMore, setHasMore] = useState(true);
+    const [actionType, setActionType] = useState('');
     // INFO DIALOG
     const [infoDialog, setInfoDialog] = useState(false);
     const [fullBundleData, setFullBundleData] = useState({});
@@ -52,6 +53,14 @@ export default function List({ clientType = 'offline', lang }) {
         startingAt: ''
     });
 
+    // ADD OR REMOVE DAYS
+    const [daysData, setDaysData] = useState({
+        numberOfDays: 0,
+        action: 'add',
+        fridayOption: false,
+        clientId: ''
+    });
+
     // DELETE STATE
     const [deleteDialog, setDeleteDialog] = useState({
         clientId: '',
@@ -74,7 +83,7 @@ export default function List({ clientType = 'offline', lang }) {
         const token = localStorage.getItem('token');
 
         // VALIDATE HAS MORE
-        if (!hasMore) {
+        if (!hasMore && !actionType) {
             return toast.error(lang === 'en' ? 'No more data' : 'لا يوجد المزيد من البيانات');
         }
 
@@ -182,7 +191,10 @@ export default function List({ clientType = 'offline', lang }) {
                 toast.success(lang === 'en' ? 'Client Freezed' : 'تم تجميد العميل');
                 setFreezeDialog(false);
                 // REFRESH THE DATA
-                getData(page, clientType);
+                getData(page, clientType,filterType);
+
+                // CLEAR THE ACTION TYPE
+                setActionType('');
             })
             .catch(error => {
                 console.error(error);
@@ -217,7 +229,10 @@ export default function List({ clientType = 'offline', lang }) {
                 toast.success(lang === 'en' ? 'Client Unfreeze' : 'تم فك تجميد العميل');
                 setFreezeDialog(false);
                 // REFRESH THE DATA
-                getData(page, clientType);
+                getData(page, clientType,filterType);
+
+                // CLEAR THE ACTION TYPE
+                setActionType('');
             })
             .catch(error => {
                 console.error(error);
@@ -251,7 +266,10 @@ export default function List({ clientType = 'offline', lang }) {
                 toast.success(lang === 'en' ? 'Client Unsubscribed' : 'تم الغاء اشتراك العميل');
                 setSubscriptionDialog(false);
                 // REFRESH THE DATA
-                getData(page, clientType);
+                getData(page, clientType,filterType);
+
+                // CLEAR THE ACTION TYPE
+                setActionType('');
             })
             .catch(error => {
                 console.error(error);
@@ -294,7 +312,7 @@ export default function List({ clientType = 'offline', lang }) {
             .then(_ => {
                 toast.success(lang === 'en' ? 'Bundle Renewed' : 'تم تجديد الباقة');
                 // REFRESH THE DATA
-                getData(page, clientType);
+                getData(page, clientType,filterType);
                 // CLOSE THE DIALOG
                 setInfoDialog(false);
                 // RESET THE SELECTED BUNDLE
@@ -339,12 +357,51 @@ export default function List({ clientType = 'offline', lang }) {
             .then(_ => {
                 toast.success(lang === 'en' ? 'Client Deleted' : 'تم حذف العميل');
                 // REFRESH THE DATA
-                getData(page, clientType);
+                getData(page, clientType,filterType);
                 // CLOSE THE DIALOG
                 setDeleteDialog({
                     clientId: '',
                     visible: false
                 });
+
+                // CLEAR THE ACTION TYPE
+                setActionType('');
+            })
+            .catch(error => {
+                console.error(error);
+                toast.error(lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
+            });
+    };
+
+    // MODIFY SUBSCRIPTION DAYS HANDLER
+    const ModifySubscriptionDaysHandler = () => {
+        // GET THE TOKEN
+        const token = localStorage.getItem('token');
+
+        // MODIFY SUBSCRIPTION DAYS URL
+        const modifySubscriptionDaysUrl = `${process.env.API_URL}/modify/subscription/days`; // POST
+
+        // VALIDATION
+        if (!daysData?.numberOfDays || !daysData?.action || !daysData?.clientId) {
+            toast.error(lang === 'en' ? 'Please fill all fields' : 'يرجى ملء جميع الحقول');
+            return;
+        }
+
+        // HANDLE MODIFY SUBSCRIPTION DAYS
+        axios.post(modifySubscriptionDaysUrl, daysData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(_ => {
+                toast.success(lang === 'en' ? 'Days Added or Removed' : 'تمت اضافة او ازالة الايام');
+
+                // REFRESH THE DATA
+                getData(page, clientType,filterType);
+
+                // CLEAR THE ACTION TYPE
+                setActionType('');
+
             })
             .catch(error => {
                 console.error(error);
@@ -379,7 +436,9 @@ export default function List({ clientType = 'offline', lang }) {
                             label={lang === 'en' ? 'Load More' : 'تحميل المزيد'}
                             icon={'pi pi-refresh'}
                             onClick={() => {
-                                setPage(page + 1);
+                                if (hasMore) {
+                                    setPage(page + 1);
+                                }
                             }}
                             style={{ width: '100%' }}
                         />
@@ -398,7 +457,7 @@ export default function List({ clientType = 'offline', lang }) {
                             value={'isActive'}
                             checked={filterType === 'isActive'}
                             onChange={(e) => {
-                                if(e.value !== filterType) {
+                                if (e.value !== filterType) {
                                     // RESET THE MORE TO TRUE
                                     setHasMore(true);
                                 }
@@ -412,7 +471,7 @@ export default function List({ clientType = 'offline', lang }) {
                             value={'isFreezed'}
                             checked={filterType === 'isFreezed'}
                             onChange={(e) => {
-                                if(e.value !== filterType) {
+                                if (e.value !== filterType) {
                                     // RESET THE MORE TO TRUE
                                     setHasMore(true);
                                 }
@@ -426,7 +485,7 @@ export default function List({ clientType = 'offline', lang }) {
                             value={'all'}
                             checked={filterType === 'all'}
                             onChange={(e) => {
-                                if(e.value !== filterType) {
+                                if (e.value !== filterType) {
                                     // RESET THE MORE TO TRUE
                                     setHasMore(true);
                                 }
@@ -563,6 +622,11 @@ export default function List({ clientType = 'offline', lang }) {
                                         getBundleData(rowData._id);
                                         // GET ALL BUNDLES
                                         getBundles();
+                                        // GET THE CLIENT ID
+                                        setDaysData({ ...daysData, clientId: rowData._id });
+
+                                        // SET THE ACTION TYPE
+                                        setActionType('view');
                                     }}
                                 >
                                     {lang === 'en' ? 'View' : 'عرض'}
@@ -579,6 +643,9 @@ export default function List({ clientType = 'offline', lang }) {
                                             pauseDate: '',
                                             period: ''
                                         });
+
+                                        // SET THE ACTION TYPE
+                                        setActionType('freeze');
                                     }}
                                 >
                                     {lang === 'en' ? (rowData.clientStatus.paused ? 'Unfreeze' : 'freeze') : (rowData.clientStatus.paused ? 'فك التجميد' : 'تجميد')}
@@ -590,6 +657,9 @@ export default function List({ clientType = 'offline', lang }) {
                                     onClick={() => {
                                         // HANDLE UNSUBSCRIBE
                                         setSubscriptionDialog(rowData);
+
+                                        // SET THE ACTION TYPE
+                                        setActionType('unsubscribe');
                                     }}
                                 >
                                     {lang === 'en' ? 'Unsubscribe' : 'الغاء الاشتراك'}
@@ -629,6 +699,9 @@ export default function List({ clientType = 'offline', lang }) {
                                             clientId: rowData._id,
                                             visible: true
                                         });
+
+                                        // SET THE ACTION TYPE
+                                        setActionType('delete');
                                     }}
                                 >
                                     {lang === 'en' ? 'Delete' : 'حذف'}
@@ -646,7 +719,12 @@ export default function List({ clientType = 'offline', lang }) {
                 header={lang === 'en' ? 'Client Info' : 'معلومات العميل'}
                 modal
                 maximizable={true}
-                onHide={() => setInfoDialog(false)}
+                onHide={() => {
+                    setInfoDialog(false);
+
+                    // CLEAR THE ACTION TYPE
+                    setActionType('');
+                }}
             >
                 {/*QUICK ACTIONS*/}
                 <div className={'card mt-2 grid'}>
@@ -767,14 +845,77 @@ export default function List({ clientType = 'offline', lang }) {
                             style={{ width: '100%' }}
                         />
                     </div>
-                    <Button
-                        label={lang === 'en' ? 'Renew Bundle' : 'تجديد الباقة'}
-                        icon={'pi pi-refresh'}
-                        severity={'primary'}
-                        style={{ width: '100%' }}
-                        onClick={RenewHandler}
-                    />
+                    <div className={'col-12'}>
+                        <Button
+                            label={lang === 'en' ? 'Renew Bundle' : 'تجديد الباقة'}
+                            icon={'pi pi-refresh'}
+                            severity={'primary'}
+                            style={{ width: '100%' }}
+                            onClick={RenewHandler}
+                        />
+                    </div>
                 </div>
+                {/*ADD OR REMOVE DAYS*/} {/*numberOfDays, action = [add | remove], fridayOption = [true | false], clientId */}
+                {infoDialog.subscriped && (<div className={'card mt-2 grid'}>
+                    <div className={'col-12'}>
+                        <h5>{lang === 'en' ? 'Add or Remove Days' : 'اضافة او ازالة ايام'}</h5>
+                    </div>
+                    <div className={'col-6'}>
+                        <label
+                            className={'mb-2 inline-block'}>{lang === 'en' ? 'Action' : 'الاجراء'}</label>
+                        <Dropdown
+                            value={daysData?.action || ''}
+                            options={[
+                                { label: lang === 'en' ? 'Add' : 'اضافة', value: 'add' },
+                                { label: lang === 'en' ? 'Remove' : 'ازالة', value: 'remove' }
+                            ]}
+                            onChange={(e) => {
+                                setDaysData({ ...daysData, action: e.value });
+                            }}
+                            placeholder={lang === 'en' ? 'Select Action' : 'اختر الاجراء'}
+                            style={{ width: '100%' }}
+                        />
+                    </div>
+                    <div className={'col-6'}>
+                        <label
+                            className={'mb-2 inline-block'}>{lang === 'en' ? 'Friday Option' : 'خيار الجمعة'}</label>
+                        <Dropdown
+                            value={daysData?.fridayOption || ''}
+                            options={[
+                                { label: lang === 'en' ? 'Yes' : 'نعم', value: true },
+                                { label: lang === 'en' ? 'No' : 'لا', value: false }
+                            ]}
+                            onChange={(e) => {
+                                setDaysData({ ...daysData, fridayOption: e.value });
+                            }}
+                            placeholder={lang === 'en' ? 'Select Option' : 'اختر الخيار'}
+                            style={{ width: '100%' }}
+                        />
+                    </div>
+                    <div className={'col-12'}>
+                        <label
+                            className={'mb-2 inline-block'}>{lang === 'en' ? 'Number of Days' : 'عدد الايام'}</label>
+                        <InputNumber
+                            value={0}
+                            onChange={(e) => {
+                                setDaysData({ ...daysData, numberOfDays: e.value });
+                            }}
+                            mode="decimal"
+                            min={0}
+                            max={1000}
+                            style={{ width: '100%' }}
+                        />
+                    </div>
+                    <div className={'col-12'}>
+                        <Button
+                            label={lang === 'en' ? 'Take Action' : 'تنفيذ الاجراء'}
+                            icon={'pi pi-refresh'}
+                            severity={'primary'}
+                            style={{ width: '100%' }}
+                            onClick={ModifySubscriptionDaysHandler}
+                        />
+                    </div>
+                </div>)}
                 {/* INFO */}
                 <div className={'card grid'}>
                     <div className={'col-6'}>
@@ -981,6 +1122,9 @@ export default function List({ clientType = 'offline', lang }) {
                         pauseDate: '',
                         period: ''
                     });
+
+                    // CLEAR THE ACTION TYPE
+                    setActionType('');
                 }}
             >
                 <div className={'grid mt-2'}>
@@ -1039,6 +1183,9 @@ export default function List({ clientType = 'offline', lang }) {
                 modal
                 onHide={() => {
                     setSubscriptionDialog(false);
+
+                    // CLEAR THE ACTION TYPE
+                    setActionType('');
                 }}
             >
                 <p>
@@ -1066,6 +1213,9 @@ export default function List({ clientType = 'offline', lang }) {
                     setAddressDialog({
                         visible: false
                     });
+
+                    // CLEAR THE ACTION TYPE
+                    setActionType('');
                 }}
                 style={{
                     width: '100%',
@@ -1121,6 +1271,9 @@ export default function List({ clientType = 'offline', lang }) {
                         clientId: '',
                         visible: false
                     });
+
+                    // CLEAR THE ACTION TYPE
+                    setActionType('');
                 }}
             >
                 <p>
