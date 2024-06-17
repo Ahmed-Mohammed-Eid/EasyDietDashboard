@@ -23,7 +23,8 @@ export default function Content({ lang }) {
         newClients: [],
         endingClients: [],
         newOfflineClients: [],
-        endingOfflineClients: []
+        endingOfflineClients: [],
+        renewedClients: [],
     });
 
 
@@ -145,7 +146,8 @@ export default function Content({ lang }) {
                     newClients: data?.newClients || [],
                     endingClients: data?.endingClients || [],
                     newOfflineClients: data?.newOfflineClients || [],
-                    endingOfflineClients: data?.endingOfflineClients || []
+                    endingOfflineClients: data?.endingOfflineClients || [],
+                    renewedClients: data?.renewedClients || [],
                 });
             })
             .catch(error => {
@@ -193,6 +195,26 @@ export default function Content({ lang }) {
                         value={clientsTypes || []} className="p-datatable-sm">
                         <Column field="type" header={lang === 'en' ? 'Type' : 'النوع'} />
                         <Column field="number" header={lang === 'en' ? 'Number' : 'العدد'} />
+                    </DataTable>
+                </div>
+            </div>
+
+            {/* RENEWED CLIENTS */}
+            <div className="col-12">
+                <div className="card">
+                    <h5>{lang === 'en' ? 'Renewed Clients' : 'العملاء المجددين'}</h5>
+                    <DataTable
+                        dir={lang === 'en' ? 'ltr' : 'rtl'}
+                        value={clientTypesTable.renewedClients || []} className="p-datatable-sm">
+                        {/*ID*/}
+                        <Column field="clientId.subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
+                        {/*NAME*/}
+                        <Column field="clientId.clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
+                        <Column field="clientId.phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
+
+                        {/* BUNDLE */}
+                        <Column field="bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
+                        <Column field="bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
                     </DataTable>
                 </div>
             </div>
