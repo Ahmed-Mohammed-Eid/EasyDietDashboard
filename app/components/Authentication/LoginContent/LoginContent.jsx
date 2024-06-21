@@ -41,17 +41,11 @@ const LoginContent = ({dictionary, lang}) => {
         event.preventDefault();
         // VALIDATE USERNAME AND PASSWORD
         const usernameRegex = /^[a-zA-Z0-9]+$/;
-        const passwordRegex = /^[a-zA-Z0-9]+$/;
 
         if (!usernameRegex.test(username)) {
             toast.error("Username is not valid");
             // ADD INVALID CLASS TO USERNAME INPUT
             usernameRef.current.classList.add("p-invalid");
-            return;
-        }
-
-        if (!passwordRegex.test(password)) {
-            toast.error("Password is not valid");
             return;
         }
 
