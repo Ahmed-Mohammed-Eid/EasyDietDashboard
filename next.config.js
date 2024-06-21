@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     env: {
-        API_URL: 'https://test.easydietkw.com/api/v1',
+        API_URL: 'https://api.easydietkw.com/api/v1',
     },
     images: {
         remotePatterns: [

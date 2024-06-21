@@ -210,8 +210,8 @@ export default function Content({ lang }) {
                         <Column field="clientId.subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
                         <Column field="clientId.clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
+                        {/* PHONE NUMBER */}
                         <Column field="clientId.phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
-
                         {/* BUNDLE */}
                         <Column field="bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
                         <Column field="bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
