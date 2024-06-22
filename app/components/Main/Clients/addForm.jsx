@@ -206,7 +206,11 @@ export default function AddClientForm({ lang }) {
                                     { label: lang === 'en' ? 'Offline' : 'أوفلاين', value: 'offline' }
                                 ]}
                                 value={clientType}
-                                onChange={(e) => setClientType(e.value)}
+                                onChange={(e) => {
+                                    setClientType(e.value);
+                                    // CLEAR STARTING DATE IF CLIENT TYPE IS OFFLINE
+                                    setStartingDate('');
+                                }}
                             />
                         </div>
 
@@ -423,7 +427,7 @@ export default function AddClientForm({ lang }) {
                                 dateFormat="yy-mm-dd"
                                 placeholder={lang === 'en' ? 'Select Date' : 'اختر التاريخ'}
                                 // MIN DATE IS AFTER 48 HOURS
-                                minDate={new Date(new Date().getTime() + 48 * 60 * 60 * 1000)}
+                                minDate={clientType === 'offline' ? new Date() : new Date(new Date().getTime() + 48 * 60 * 60 * 1000)}
                                 style={{ width: '100%' }}
                             />
                         </div>

@@ -9,7 +9,6 @@ import { DataTable } from 'primereact/datatable';
 import Image from 'next/image';
 
 export default function Content({ lang }) {
-
     // STATES
     const [bestSellingBundles, setBestSellingBundles] = useState([]);
     const [clientsStats, setClientsStats] = useState({});
@@ -24,9 +23,8 @@ export default function Content({ lang }) {
         endingClients: [],
         newOfflineClients: [],
         endingOfflineClients: [],
-        renewedClients: [],
+        renewedClients: []
     });
-
 
     // EFFECT TO GET THE DATA
     useEffect(() => {
@@ -43,12 +41,13 @@ export default function Content({ lang }) {
         const token = localStorage.getItem('token');
 
         // GET THE DATA
-        axios.get(`${process.env.API_URL}/get/stats`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => {
+        axios
+            .get(`${process.env.API_URL}/get/stats`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
                 const data = response.data?.data;
                 // SET THE DATA
                 setBestSellingBundles(data?.bestSeller || []);
@@ -118,12 +117,11 @@ export default function Content({ lang }) {
                             number: data?.clientsStats[key]
                         });
                     }
-
                 }
 
                 setClientsTypes(clientsTypes);
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
     };
@@ -134,26 +132,28 @@ export default function Content({ lang }) {
         const token = localStorage.getItem('token');
 
         // GET THE DATA
-        axios.get(`${process.env.API_URL}/monitor/clients`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(response => {
+        axios
+            .get(`${process.env.API_URL}/monitor/clients`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then((response) => {
                 const data = response.data;
+                console.log(data);
                 // SET THE DATA
                 setClientTypesTable({
                     newClients: data?.newClients || [],
                     endingClients: data?.endingClients || [],
                     newOfflineClients: data?.newOfflineClients || [],
                     endingOfflineClients: data?.endingOfflineClients || [],
-                    renewedClients: data?.renewedClients || [],
+                    renewedClients: data?.renewedClients || []
                 });
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log(error);
             });
-    }
+    };
 
     return (
         <div className="grid" dir={lang === 'en' ? 'ltr' : 'rtl'}>
@@ -190,9 +190,7 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Clients Types' : 'انواع العملاء'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientsTypes || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientsTypes || []} className="p-datatable-sm">
                         <Column field="type" header={lang === 'en' ? 'Type' : 'النوع'} />
                         <Column field="number" header={lang === 'en' ? 'Number' : 'العدد'} />
                     </DataTable>
@@ -203,9 +201,7 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Renewed Clients' : 'العملاء المجددين'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientTypesTable.renewedClients || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.renewedClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="clientId.subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
@@ -215,6 +211,22 @@ export default function Content({ lang }) {
                         {/* BUNDLE */}
                         <Column field="bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
                         <Column field="bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        {/* START DATE */}
+                        <Column
+                            field="clientId.subscripedBundle.startingDate"
+                            header={lang === 'en' ? 'Start Date' : 'تاريخ البداية'}
+                            body={(rowData) => {
+                                return new Date(rowData?.clientId?.subscripedBundle?.startingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
+                        {/* END DATE */}
+                        <Column
+                            field="clientId.subscripedBundle.endingDate"
+                            header={lang === 'en' ? 'End Date' : 'تاريخ الانتهاء'}
+                            body={(rowData) => {
+                                return new Date(rowData?.clientId?.subscripedBundle?.endingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
                     </DataTable>
                 </div>
             </div>
@@ -223,14 +235,31 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'New Clients Online' : 'العملاء الجدد اونلاين'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientTypesTable.newClients || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.newClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
                         <Column field="clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
                         <Column field="phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
+                        {/* BUNDLE */}
+                        <Column field="subscripedBundle.bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
+                        <Column field="subscripedBundle.bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        {/* START DATE */}
+                        <Column
+                            field="subscripedBundle.startingDate"
+                            header={lang === 'en' ? 'Start Date' : 'تاريخ البداية'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.startingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
+                        {/* END DATE */}
+                        <Column
+                            field="subscripedBundle.endingDate"
+                            header={lang === 'en' ? 'End Date' : 'تاريخ الانتهاء'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.endingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
                     </DataTable>
                 </div>
             </div>
@@ -239,14 +268,31 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Ending Soon Clients Online' : 'العملاء القدامى اونلاين'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientTypesTable.endingClients || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.endingClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
                         <Column field="clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
                         <Column field="phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
+                        {/* BUNDLE */}
+                        <Column field="subscripedBundle.bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
+                        <Column field="subscripedBundle.bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        {/* START DATE */}
+                        <Column
+                            field="subscripedBundle.startingDate"
+                            header={lang === 'en' ? 'Start Date' : 'تاريخ البداية'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.startingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
+                        {/* END DATE */}
+                        <Column
+                            field="subscripedBundle.endingDate"
+                            header={lang === 'en' ? 'End Date' : 'تاريخ الانتهاء'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.endingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
                     </DataTable>
                 </div>
             </div>
@@ -255,14 +301,31 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'New Clients Offline' : 'العملاء الجدد اوفلاين'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientTypesTable.newOfflineClients || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.newOfflineClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
                         <Column field="clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
                         <Column field="phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
+                        {/* BUNDLE */}
+                        <Column field="bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
+                        <Column field="bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        {/* START DATE */}
+                        <Column
+                            field="subscripedBundle.startingDate"
+                            header={lang === 'en' ? 'Start Date' : 'تاريخ البداية'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.startingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
+                        {/* END DATE */}
+                        <Column
+                            field="subscripedBundle.endingDate"
+                            header={lang === 'en' ? 'End Date' : 'تاريخ الانتهاء'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.endingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
                     </DataTable>
                 </div>
             </div>
@@ -271,14 +334,31 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Ending Soon Clients Offline' : 'العملاء القدامى اوفلاين'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={clientTypesTable.endingOfflineClients || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.endingOfflineClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
                         {/*NAME*/}
                         <Column field="clientName" header={lang === 'en' ? 'Name' : 'الاسم'} />
                         <Column field="phoneNumber" header={lang === 'en' ? 'Phone Number' : 'رقم الهاتف'} />
+                        {/* BUNDLE */}
+                        <Column field="bundleId.bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
+                        <Column field="bundleId.bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        {/* START DATE */}
+                        <Column
+                            field="subscripedBundle.startingDate"
+                            header={lang === 'en' ? 'Start Date' : 'تاريخ البداية'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.startingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
+                        {/* END DATE */}
+                        <Column
+                            field="subscripedBundle.endingDate"
+                            header={lang === 'en' ? 'End Date' : 'تاريخ الانتهاء'}
+                            body={(rowData) => {
+                                return new Date(rowData?.subscripedBundle?.endingDate).toLocaleDateString(lang === 'en' ? 'en-US' : 'ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+                            }}
+                        />
                     </DataTable>
                 </div>
             </div>
@@ -287,42 +367,23 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Best Selling Bundles' : 'افضل الباقات مبيعا'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={bestSellingBundles || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={bestSellingBundles || []} className="p-datatable-sm">
                         <Column
                             field="bundleImageMale"
                             header={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'}
                             body={(rowData) => {
-                                return (
-                                    <Image
-                                        src={rowData.bundleImageMale || '/assets/404.jpg'}
-                                        alt={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'}
-                                        width={50}
-                                        height={50}
-                                        style={{ borderRadius: '50%' }}
-                                    />
-                                );
+                                return <Image src={rowData.bundleImageMale || '/assets/404.jpg'} alt={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'} width={50} height={50} style={{ borderRadius: '50%' }} />;
                             }}
                         />
                         <Column
                             field="bundleImageFemale"
                             header={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'}
                             body={(rowData) => {
-                                return (
-                                    <Image
-                                        src={rowData.bundleImageFemale || '/assets/404.jpg'}
-                                        alt={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'}
-                                        width={50}
-                                        height={50}
-                                        style={{ borderRadius: '50%' }}
-                                    />
-                                );
+                                return <Image src={rowData.bundleImageFemale || '/assets/404.jpg'} alt={lang === 'en' ? 'Bundle Image' : 'صورة الباقة'} width={50} height={50} style={{ borderRadius: '50%' }} />;
                             }}
                         />
                         <Column field="bundleName" header={lang === 'en' ? 'Bundle Name' : 'اسم الباقة'} />
-                        <Column field="bundleNameEn"
-                                header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
+                        <Column field="bundleNameEn" header={lang === 'en' ? 'Bundle Name En' : 'اسم الباقة بالانجليزي'} />
                         <Column field="bundlePrice" header={lang === 'en' ? 'Bundle Price' : 'سعر الباقة'} />
                     </DataTable>
                 </div>
@@ -332,22 +393,12 @@ export default function Content({ lang }) {
             <div className="col-12">
                 <div className="card">
                     <h5>{lang === 'en' ? 'Top Selected Meals' : 'افضل الوجبات مبيعا'}</h5>
-                    <DataTable
-                        dir={lang === 'en' ? 'ltr' : 'rtl'}
-                        value={topSelectedMeals || []} className="p-datatable-sm">
+                    <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={topSelectedMeals || []} className="p-datatable-sm">
                         <Column
                             field="imagePath"
                             header={lang === 'en' ? 'Meal Image' : 'صورة الوجبة'}
                             body={(rowData) => {
-                                return (
-                                    <Image
-                                        src={rowData.imagePath || '/assets/404.jpg'}
-                                        alt={lang === 'en' ? 'Meal Image' : 'صورة الوجبة'}
-                                        width={50}
-                                        height={50}
-                                        style={{ borderRadius: '50%' }}
-                                    />
-                                );
+                                return <Image src={rowData.imagePath || '/assets/404.jpg'} alt={lang === 'en' ? 'Meal Image' : 'صورة الوجبة'} width={50} height={50} style={{ borderRadius: '50%' }} />;
                             }}
                         />
                         <Column field="mealTitle" header={lang === 'en' ? 'Meal Name' : 'اسم الوجبة'} />
