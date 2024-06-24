@@ -37,7 +37,7 @@ export default function UpdateClientForm({ lang, id }) {
 
         // VALIDATION
         // # CLIENT INFORMATION
-        if (!clientName || !clientNameEn || !phoneNumber || !email || !gender) {
+        if (!clientName || !clientNameEn || !phoneNumber || !gender) {
             toast.error(lang === 'en' ? 'Please fill all client information fields' : 'يرجى ملء جميع حقول معلومات العميل');
             return;
         }

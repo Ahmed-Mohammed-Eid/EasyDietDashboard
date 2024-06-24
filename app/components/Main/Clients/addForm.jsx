@@ -86,7 +86,7 @@ export default function AddClientForm({ lang }) {
             return;
         }
 
-        if (customBundle && (!mealsNumber || !snacksNumber || !bundlePeriod || !bundlePrice || !carb || !protine || !startingDate)) {
+        if (customBundle && (!mealsNumber || !bundlePeriod || !bundlePrice || !carb || !protine || !startingDate)) {
             toast.error(lang === 'en' ? 'Please fill all bundle information fields' : 'يرجى ملء جميع حقول معلومات الباقة');
             return;
         }
