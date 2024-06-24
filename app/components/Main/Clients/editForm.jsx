@@ -10,6 +10,7 @@ import governoratesAndRegions from '../../../../json/governoratesAndRegions.json
 import { getCitiesByGovernorate } from '../../../../helpers/getTheCites';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { Chips } from 'primereact/chips';
 
 export default function UpdateClientForm({ lang, id }) {
 
@@ -28,6 +29,7 @@ export default function UpdateClientForm({ lang, id }) {
     const [appartment, setAppartment] = React.useState('');
     const [appartmentNo, setAppartmentNo] = React.useState('');
     const [landmark, setLandmark] = React.useState('');
+    const [dislikedMeals, setDislikedMeals] = React.useState('');
 
     // SUBMIT HANDLER
     const handleSubmit = (e) => {
@@ -62,6 +64,7 @@ export default function UpdateClientForm({ lang, id }) {
             appartment,
             appartmentNo,
             landmark,
+            dislikedMeals: dislikedMeals.join(','),
             clientId: id
         }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             .then(_ => {
@@ -93,6 +96,7 @@ export default function UpdateClientForm({ lang, id }) {
                 setAppartment(client.appartment);
                 setAppartmentNo(client.appartmentNo);
                 setLandmark(client.landmark);
+                setDislikedMeals(client.dislikedMeals.split(','));
             })
             .catch(err => {
                 console.log(err);
@@ -161,6 +165,19 @@ export default function UpdateClientForm({ lang, id }) {
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </div>
+
+                        {/*DISLIKED MEALS*/}
+                        <div className={'field col-12'}>
+                            <label
+                                htmlFor={'dislikedMeals'}>{lang === 'en' ? 'Disliked Meals' : 'الوجبات المكروهة'}</label>
+                            <Chips
+                                id={'dislikedMeals'}
+                                placeholder={lang === 'en' ? 'Enter Disliked Meals' : 'أدخل الوجبات المكروهة'}
+                                value={dislikedMeals}
+                                onChange={(e) => setDislikedMeals(e.value)}
+                            />
+                        </div>
+
                         <div className={'field col-12'}>
                             <label htmlFor={'gender'}>{lang === 'en' ? 'Gender' : 'الجنس'}</label>
                             <div className="flex flex-wrap gap-3">

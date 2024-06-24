@@ -9,7 +9,6 @@ import { RadioButton } from 'primereact/radiobutton';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputMask } from 'primereact/inputmask';
 import { Calendar } from 'primereact/calendar';
-import { AutoComplete } from 'primereact/autocomplete';
 import { Chips } from 'primereact/chips';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Checkbox } from 'primereact/checkbox';
@@ -64,7 +63,6 @@ export default function AddClientForm({ lang }) {
     });
 
 
-
     // SUBMIT HANDLER
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -102,7 +100,6 @@ export default function AddClientForm({ lang }) {
         // FORMAT THE DATE TO BE IN THE FORMAT OF DD-MM-YYYY
         const date = new Date(startingDate);
         const formattedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
-
 
 
         // AXIOS REQUEST
@@ -155,9 +152,9 @@ export default function AddClientForm({ lang }) {
             })
             .catch(err => {
                 console.log(err);
-                toast(lang === 'en' ? 'Error Adding Client' : 'خطأ فى إضافة العميل', { icon: 'error' });
+                toast.error(err.response?.data?.message || lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
             });
-        };
+    };
 
     // GET ALL BUNDLES
     const getBundles = () => {
@@ -183,8 +180,8 @@ export default function AddClientForm({ lang }) {
         getBundles();
     }, []);
 
-        return (
-            <>
+    return (
+        <>
             <form onSubmit={handleSubmit}>
                 <div className={`card`}>
                     <h1 className={'text-2xl mb-5 uppercase'}>
@@ -247,6 +244,20 @@ export default function AddClientForm({ lang }) {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                             />
                         </div>
+
+                        {/*DISLIKED MEALS*/}
+                        <div className={'field col-12'}>
+                            <label
+                                htmlFor={'dislikedMeals'}>{lang === 'en' ? 'Disliked Meals' : 'الوجبات المكروهة'}</label>
+                            <Chips
+                                id={'dislikedMeals'}
+                                placeholder={lang === 'en' ? 'Enter Disliked Meals' : 'أدخل الوجبات المكروهة'}
+                                value={dislikedMeals}
+                                onChange={(e) => setDislikedMeals(e.value)}
+                            />
+                        </div>
+
+
                         <div className={'field col-12'}>
                             <label htmlFor={'gender'}>{lang === 'en' ? 'Gender' : 'الجنس'}</label>
                             <div className="flex flex-wrap gap-3">
@@ -472,17 +483,6 @@ export default function AddClientForm({ lang }) {
                             />
                         </div>)}
 
-                        {customBundle && (<div className={'field col-12'}>
-                            <label
-                                htmlFor={'dislikedMeals'}>{lang === 'en' ? 'Disliked Meals' : 'الوجبات المكروهة'}</label>
-                            <Chips
-                                id={'dislikedMeals'}
-                                placeholder={lang === 'en' ? 'Enter Disliked Meals' : 'أدخل الوجبات المكروهة'}
-                                value={dislikedMeals}
-                                onChange={(e) => setDislikedMeals(e.value)}
-                            />
-                        </div>)}
-
                         {customBundle && (<div className={'field col-12 md:col-6'}>
                             <label htmlFor={'carb'}>{lang === 'en' ? 'Carb' : 'الكربوهيدرات'}</label>
                             <InputNumber
@@ -553,43 +553,43 @@ export default function AddClientForm({ lang }) {
                     />
                 </div>
             </form>
-                <Dialog
-                    header={lang === 'en' ? 'Client Signing In Details' : 'تفاصيل تسجيل الدخول للعميل'}
-                    visible={clientSigningIn?.dialogVisible}
-                    style={{ width: '50vw' }}
-                    onHide={() => setClientSigningIn({ ...clientSigningIn, dialogVisible: false })}
-                >
-                    <div className={'p-fluid formgrid grid'}>
-                        <div className={'field col-12 md:col-6'}>
-                            <label htmlFor={'username'}>{lang === 'en' ? 'Username' : 'اسم المستخدم'}</label>
-                            <p
-                                id={'username'}
-                                onClick={() => {
-                                    navigator.clipboard.writeText(clientSigningIn.username);
-                                    toast.success(lang === 'en' ? 'Copied to clipboard' : 'تم النسخ');
-                                }}
-                                className={'cursor-pointer'}
-                                style={{ color: 'blue' }}
-                            >
-                                {clientSigningIn.username}
-                            </p>
-                        </div>
-                        <div className={'field col-12 md-6'}>
-                            <label htmlFor={'password'}>{lang === 'en' ? 'Password' : 'كلمة المرور'}</label>
-                            <p
-                                id={'password'}
-                                onClick={() => {
-                                    navigator.clipboard.writeText(clientSigningIn.password);
-                                    toast.success(lang === 'en' ? 'Copied to clipboard' : 'تم النسخ');
-                                }}
-                                className={'cursor-pointer'}
-                                style={{ color: 'blue' }}
-                            >
-                                {clientSigningIn.password}
-                            </p>
-                        </div>
+            <Dialog
+                header={lang === 'en' ? 'Client Signing In Details' : 'تفاصيل تسجيل الدخول للعميل'}
+                visible={clientSigningIn?.dialogVisible}
+                style={{ width: '50vw' }}
+                onHide={() => setClientSigningIn({ ...clientSigningIn, dialogVisible: false })}
+            >
+                <div className={'p-fluid formgrid grid'}>
+                    <div className={'field col-12 md:col-6'}>
+                        <label htmlFor={'username'}>{lang === 'en' ? 'Username' : 'اسم المستخدم'}</label>
+                        <p
+                            id={'username'}
+                            onClick={() => {
+                                navigator.clipboard.writeText(clientSigningIn.username);
+                                toast.success(lang === 'en' ? 'Copied to clipboard' : 'تم النسخ');
+                            }}
+                            className={'cursor-pointer'}
+                            style={{ color: 'blue' }}
+                        >
+                            {clientSigningIn.username}
+                        </p>
                     </div>
-                </Dialog>
-            </>
-        );
-    };
+                    <div className={'field col-12 md-6'}>
+                        <label htmlFor={'password'}>{lang === 'en' ? 'Password' : 'كلمة المرور'}</label>
+                        <p
+                            id={'password'}
+                            onClick={() => {
+                                navigator.clipboard.writeText(clientSigningIn.password);
+                                toast.success(lang === 'en' ? 'Copied to clipboard' : 'تم النسخ');
+                            }}
+                            className={'cursor-pointer'}
+                            style={{ color: 'blue' }}
+                        >
+                            {clientSigningIn.password}
+                        </p>
+                    </div>
+                </div>
+            </Dialog>
+        </>
+    );
+};
