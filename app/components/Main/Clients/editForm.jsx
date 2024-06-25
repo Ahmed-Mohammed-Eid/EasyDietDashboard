@@ -11,14 +11,17 @@ import { getCitiesByGovernorate } from '../../../../helpers/getTheCites';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Chips } from 'primereact/chips';
+import { Password } from 'primereact/password';
 
 export default function UpdateClientForm({ lang, id }) {
 
     // STATE
+    const [clientType, setClientType] = React.useState('');
     const [clientName, setClientName] = React.useState('');
     const [clientNameEn, setClientNameEn] = React.useState('');
     const [phoneNumber, setPhoneNumber] = React.useState('');
     const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
     const [gender, setGender] = React.useState('');
     const [governorate, setGovernorate] = React.useState('');
     const [distrect, setDistrect] = React.useState('');
@@ -36,6 +39,11 @@ export default function UpdateClientForm({ lang, id }) {
         e.preventDefault();
 
         // VALIDATION
+        if(clientType === 'online' && (!email || !password)) {
+            toast.error(lang === 'en' ? 'Please fill all client information fields' : 'يرجى ملء جميع حقول معلومات العميل');
+            return;
+        }
+
         // # CLIENT INFORMATION
         if (!clientName || !clientNameEn || !phoneNumber || !gender) {
             toast.error(lang === 'en' ? 'Please fill all client information fields' : 'يرجى ملء جميع حقول معلومات العميل');
@@ -50,10 +58,12 @@ export default function UpdateClientForm({ lang, id }) {
 
         // AXIOS REQUEST
         axios.put(`${process.env.API_URL}/edit/client/profile`, {
+            clientType,
             clientName,
             clientNameEn,
             phoneNumber,
             email,
+            password,
             gender,
             governorate,
             distrect,
@@ -80,8 +90,9 @@ export default function UpdateClientForm({ lang, id }) {
     const getClientData = () => {
         axios.get(`${process.env.API_URL}/get/client?clientId=${id}`, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             .then(res => {
-                const client = res.data?.client
+                const client = res.data?.client;
                 // SET THE CLIENT DATA
+                setClientType(client.clientType);
                 setClientName(client.clientName);
                 setClientNameEn(client.clientNameEn);
                 setPhoneNumber(client.phoneNumber);
@@ -101,7 +112,7 @@ export default function UpdateClientForm({ lang, id }) {
             .catch(err => {
                 console.log(err);
             });
-    }
+    };
 
     // EFFECT TO GET THE CLIENT DATA
     React.useEffect(() => {
@@ -121,6 +132,21 @@ export default function UpdateClientForm({ lang, id }) {
                     </h3>
 
                     <div className={'p-fluid formgrid grid'}>
+                        <div className={'field col-12'}>
+                            <label htmlFor={'clientType'}>{lang === 'en' ? 'Client Type' : 'نوع العميل'}</label>
+                            <Dropdown
+                                id={'clientType'}
+                                placeholder={lang === 'en' ? 'Select Client Type' : 'اختر نوع العميل'}
+                                options={[
+                                    { label: lang === 'en' ? 'Online' : 'أونلاين', value: 'online' },
+                                    { label: lang === 'en' ? 'Offline' : 'أوفلاين', value: 'offline' }
+                                ]}
+                                value={clientType}
+                                onChange={(e) => {
+                                    setClientType(e.value);
+                                }}
+                            />
+                        </div>
                         <div className={'field col-12 md:col-6'}>
                             <label htmlFor={'name'}>{lang === 'en' ? 'Client Name' : 'اسم العميل'}</label>
                             <InputText
@@ -143,7 +169,7 @@ export default function UpdateClientForm({ lang, id }) {
                                 onChange={(e) => setClientNameEn(e.target.value)}
                             />
                         </div>
-                        <div className={'field col-12 md:col-6'}>
+                        <div className={`field col-12 ${clientType === "offline" ? "md:col-12" : 'md:col-6'}`}>
                             <label htmlFor={'phone'}>{lang === 'en' ? 'Phone Number' : 'رقم الهاتف'}</label>
                             <InputMask
                                 id={'phone'}
@@ -154,17 +180,27 @@ export default function UpdateClientForm({ lang, id }) {
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                             />
                         </div>
-                        <div className={'field col-12 md:col-6'}>
+                        {clientType === "online" && (<div className={'field col-12 md:col-6'}>
                             <label htmlFor={'email'}>{lang === 'en' ? 'Email' : 'البريد الالكتروني'}</label>
                             <InputText
                                 id={'email'}
                                 type={'email'}
                                 placeholder={lang === 'en' ? 'Enter Email' : 'أدخل البريد الالكتروني'}
-                                required
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
-                        </div>
+                        </div>)}
+                        {clientType === "online" && (<div className={'field col-12'}>
+                            <label htmlFor={'password'}>{lang === 'en' ? 'Password' : 'كلمة المرور'}</label>
+                            <Password
+                                id={'password'}
+                                type={'password'}
+                                placeholder={lang === 'en' ? 'Enter Password' : 'أدخل كلمة المرور'}
+                                toggleMask={true}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>)}
 
                         {/*DISLIKED MEALS*/}
                         <div className={'field col-12'}>
