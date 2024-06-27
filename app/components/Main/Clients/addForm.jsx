@@ -130,7 +130,7 @@ export default function AddClientForm({ lang }) {
             appartmentNo,
             landmark,
             clientType,
-            dislikedMeals,
+            dislikedMeals: dislikedMeals.join(','),
             password,
             bundleId,
             startingDate: formattedDate
@@ -152,7 +152,7 @@ export default function AddClientForm({ lang }) {
             })
             .catch(err => {
                 console.log(err);
-                toast.error(err.response?.data?.message || lang === 'en' ? 'Something went wrong' : 'حدث خطأ ما');
+                toast.error(err.response?.data?.message);
             });
     };
 

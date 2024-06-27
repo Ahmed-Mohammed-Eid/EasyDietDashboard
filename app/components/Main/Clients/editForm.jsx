@@ -39,7 +39,7 @@ export default function UpdateClientForm({ lang, id }) {
         e.preventDefault();
 
         // VALIDATION
-        if(clientType === 'online' && (!email || !password)) {
+        if(clientType === 'online' && (!email)) {
             toast.error(lang === 'en' ? 'Please fill all client information fields' : 'يرجى ملء جميع حقول معلومات العميل');
             return;
         }
