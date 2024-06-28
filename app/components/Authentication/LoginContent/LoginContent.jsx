@@ -70,7 +70,7 @@ const LoginContent = ({dictionary, lang}) => {
                 if(res.data?.user?.role === "admin"){
                     // REDIRECT TO HOME PAGE
                     toast.success("Login Successful");
-                    router.push("/");
+                    router.push(`/${lang}/`);
                 }else{
                     toast.error("You are not authorized to access this page");
                 }

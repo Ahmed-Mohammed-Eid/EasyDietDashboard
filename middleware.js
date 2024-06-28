@@ -41,6 +41,7 @@ export async function middleware(request) {
 
     // Redirect if there is no locale
     let locale = locales.includes(lang?.value) ? lang.value : getLocale(request);
+
     // Set the language cookie
     request.nextUrl.pathname = `/${locale}${pathname}`
     // e.g. incoming request is /products

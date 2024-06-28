@@ -10,8 +10,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LayoutContext } from './context/layoutcontext';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 
 const AppConfig = (props) => {
+
+    // GET THE ROUTER
+    const router = useRouter();
 
     // GET THE CURRENT PATH
     const pathname = usePathname();
@@ -74,7 +78,7 @@ const AppConfig = (props) => {
         const parts = pathname.split('/');
         parts[1] = lang;
         // redirect to the new path
-        window.location.href = parts.join('/');
+        router.push(parts.join('/'));
     };
 
     useEffect(() => {
@@ -82,28 +86,22 @@ const AppConfig = (props) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [layoutConfig.scale]);
 
-    // GET THE LANGUAGE FROM THE BROWSER AND SET IT TO THE LAYOUT CONFIG
-    useEffect(() => {
-        // GET IT FROM THE LOCAL STORAGE
-        const language = localStorage.getItem('language');
-        setLayoutConfig((prevState) => ({ ...prevState, language }));
-    }, [setLayoutConfig]);
-
     // SET THE LANGUAGE TO THE LOCAL STORAGE AND THE COOKIES WHEN THE LANGUAGE CHANGES AND THE PAGE IS LOADED
     useEffect(() => {
-        // GET THE LANGUAGE FROM THE LOCAL STORAGE
-        const language = localStorage.getItem('language');
-        // GET THE LANGUAGE FROM THE COOKIES
-        const cookies = document.cookie.split(';');
-        const cookie = cookies.find((item) => item.includes('language'));
-        const cookieValue = cookie?.split('=')[1];
+        // GET THE URL
+        const url = window.location.href;
+        // GET THE LANGUAGE FROM THE URL
+        const lang = url.split('/')[3];
+        // SET THE LANGUAGE TO THE LOCAL STORAGE
+        localStorage.setItem('language', lang);
+        // SET THE LANGUAGE TO THE COOKIES
+        document.cookie = `language=${lang}`;
 
-        if(!language || !cookieValue) {
-            // SET THE LANGUAGE TO THE LOCAL STORAGE
-            localStorage.setItem('language', 'en');
-            // SET THE LANGUAGE TO THE COOKIES
-            document.cookie = `language=${'en'}`;
-        }
+        // SET THE LANGUAGE TO THE LAYOUT CONFIG
+        setLayoutConfig((prevState) => ({
+            ...prevState,
+            language: lang
+        }));
     }, []);
 
     return (
@@ -129,7 +127,6 @@ const AppConfig = (props) => {
                                                  }));
                                                  // GO TO THE /en/ ROUTE
                                                  handleLanguageChange('en');
-                                                 // window.location.href = '/en';
                                              }}
                                              inputId="en"
                                 />

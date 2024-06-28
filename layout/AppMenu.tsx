@@ -17,71 +17,71 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
     const model: AppMenuItem[] = [
         {
             label: dictionary.sidebar.home.title,
-            items: [{ label: dictionary.sidebar.home.dashboard, icon: 'pi pi-fw pi-home', to: '/' }]
+            items: [{ label: dictionary.sidebar.home.dashboard, icon: 'pi pi-fw pi-home', to: `/${lang}/` }]
         },
         {
             label: lang === 'en' ? 'Categories' : 'الأقسام',
             icon: 'pi pi-fw pi-folder',
             items: [
-                { label: lang === 'en' ? 'Categories List' : 'قائمة الأقسام', icon: 'pi pi-fw pi-list', to: '/categories' },
-                { label: lang === 'en' ? 'Add Category' : 'إضافة قسم', icon: 'pi pi-fw pi-plus', to: '/categories/add' }
+                { label: lang === 'en' ? 'Categories List' : 'قائمة الأقسام', icon: 'pi pi-fw pi-list', to: `/${lang}/categories` },
+                { label: lang === 'en' ? 'Add Category' : 'إضافة قسم', icon: 'pi pi-fw pi-plus', to: `/${lang}/categories/add` }
             ]
         },
         {
             label: lang === 'en' ? 'Meals' : 'الوجبات',
             icon: 'pi pi-fw pi-utensils',
             items: [
-                { label: lang === 'en' ? 'Meals List' : 'قائمة الوجبات', icon: 'pi pi-fw pi-list', to: '/meals' },
-                { label: lang === 'en' ? 'Add Meal' : 'إضافة وجبة', icon: 'pi pi-fw pi-plus', to: '/meals/add' },
-                { label: lang === 'en' ? 'Meal Reviews' : 'تقييمات الوجبات', icon: 'pi pi-fw pi-star', to: '/meals/reviews' }
+                { label: lang === 'en' ? 'Meals List' : 'قائمة الوجبات', icon: 'pi pi-fw pi-list', to: `/${lang}/meals` },
+                { label: lang === 'en' ? 'Add Meal' : 'إضافة وجبة', icon: 'pi pi-fw pi-plus', to: `/${lang}/meals/add` },
+                { label: lang === 'en' ? 'Meal Reviews' : 'تقييمات الوجبات', icon: 'pi pi-fw pi-star', to: `/${lang}/meals/reviews` }
             ]
         },
         {
             label: lang === 'en' ? 'Bundles' : 'الباقات',
             icon: 'pi pi-fw pi-shopping-cart',
             items: [
-                { label: lang === 'en' ? 'Bundles List' : 'قائمة الباقات', icon: 'pi pi-fw pi-list', to: '/bundles' },
-                { label: lang === 'en' ? 'Add Bundle' : 'إضافة باقة', icon: 'pi pi-fw pi-plus', to: '/bundles/add' }
+                { label: lang === 'en' ? 'Bundles List' : 'قائمة الباقات', icon: 'pi pi-fw pi-list', to: `/${lang}/bundles` },
+                { label: lang === 'en' ? 'Add Bundle' : 'إضافة باقة', icon: 'pi pi-fw pi-plus', to: `/${lang}/bundles/add` }
             ]
         },
         {
             label: lang === 'en' ? 'Clients' : 'العملاء',
             icon: 'pi pi-fw pi-user',
             items: [
-                { label: lang === 'en' ? 'Clients List' : 'قائمة العملاء', icon: 'pi pi-fw pi-list', to: '/clients' },
-                { label: lang === 'en' ? 'Add Client' : 'إضافة عميل', icon: 'pi pi-fw pi-plus', to: '/clients/add' }
+                { label: lang === 'en' ? 'Clients List' : 'قائمة العملاء', icon: 'pi pi-fw pi-list', to: `/${lang}/clients` },
+                { label: lang === 'en' ? 'Add Client' : 'إضافة عميل', icon: 'pi pi-fw pi-plus', to: `/${lang}/clients/add` }
             ]
         },
         {
             label: lang === 'en' ? 'Employees' : 'الموظفين',
             icon: 'pi pi-fw pi-users',
             items: [
-                { label: lang === 'en' ? 'Employees List' : 'قائمة الموظفين', icon: 'pi pi-fw pi-list', to: '/employee' },
-                { label: lang === 'en' ? 'Add Employee' : 'إضافة موظف', icon: 'pi pi-fw pi-plus', to: '/employee/add' }
+                { label: lang === 'en' ? 'Employees List' : 'قائمة الموظفين', icon: 'pi pi-fw pi-list', to: `/${lang}/employee` },
+                { label: lang === 'en' ? 'Add Employee' : 'إضافة موظف', icon: 'pi pi-fw pi-plus', to: `/${lang}/employee/add` }
             ]
         },
         {
             label: lang === 'en' ? 'Menus' : 'القوائم',
             icon: 'pi pi-fw pi-book',
             items: [
-                { label: lang === 'en' ? 'Daily Menu' : 'القوائم اليومية', icon: 'pi pi-fw pi-list', to: '/menu/daily' },
-                { label: lang === 'en' ? 'Add Daily Day' : 'إضافة للقائمة اليومية', icon: 'pi pi-fw pi-plus', to: '/menu/daily/add' },
-                { label: lang === 'en' ? 'Default Menu' : 'القائمة الافتراضية', icon: 'pi pi-fw pi-list', to: '/menu/default' },
-                { label: lang === 'en' ? 'Add Default Menu' : 'إضافة للقائمة الإفتراضية', icon: 'pi pi-fw pi-plus', to: '/menu/default/add' }
+                { label: lang === 'en' ? 'Daily Menu' : 'القوائم اليومية', icon: 'pi pi-fw pi-list', to: `/${lang}/menu/daily` },
+                { label: lang === 'en' ? 'Add Daily Day' : 'إضافة للقائمة اليومية', icon: 'pi pi-fw pi-plus', to: `/${lang}/menu/daily/add` },
+                { label: lang === 'en' ? 'Default Menu' : 'القائمة الافتراضية', icon: 'pi pi-fw pi-list', to: `/${lang}/menu/default` },
+                { label: lang === 'en' ? 'Add Default Menu' : 'إضافة للقائمة الإفتراضية', icon: 'pi pi-fw pi-plus', to: `/${lang}/menu/default/add` }
             ]
         },
         {
             label: dictionary.sidebar.coupons.title,
             items: [
-                { label: dictionary.sidebar.coupons.list, icon: 'pi pi-fw pi-list', to: '/coupons' },
-                { label: dictionary.sidebar.coupons.add, icon: 'pi pi-fw pi-plus', to: '/coupons/add' }
+                { label: dictionary.sidebar.coupons.list, icon: 'pi pi-fw pi-list', to: `/${lang}/coupons` },
+                { label: dictionary.sidebar.coupons.add, icon: 'pi pi-fw pi-plus', to: `/${lang}/coupons/add` }
             ]
         },
         {
             label: lang === 'en' ? 'Branches' : 'الفروع',
             icon: 'pi pi-fw pi-home',
             items: [
-                { label: lang === 'en' ? 'Branches\' Manager' : "مدير الفرع" , icon: 'pi pi-fw pi-list', to: '/branchManager' },
+                { label: lang === 'en' ? 'Branches\' Manager' : "مدير الفرع" , icon: 'pi pi-fw pi-list', to: `/${lang}/branchManager` },
             ]
         },
         {
@@ -91,12 +91,12 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
                 {
                     label: lang === 'en' ? 'Sliders List' : 'قائمة الصور',
                     icon: 'pi pi-fw pi-cog',
-                    to: '/ui/sliders'
+                    to: `/${lang}/ui/sliders`
                 },
                 {
                     label: lang === 'en' ? 'Add Slider' : 'إضافة صورة',
                     icon: 'pi pi-fw pi-plus',
-                    to: '/ui/sliders/add'
+                    to: `/${lang}/ui/sliders/add`
                 }
             ]
         },
@@ -104,7 +104,7 @@ const AppMenu = ({ dictionary, lang }: ChildContainerProps) => {
             label: lang === 'en' ? 'Reports' : 'التقارير',
             icon: 'pi pi-fw pi-chart-bar',
             items: [
-                {label: lang === 'en' ? 'Reports List' : 'قائمة التقارير', icon: 'pi pi-fw pi-list', to: '/reports'},
+                {label: lang === 'en' ? 'Reports List' : 'قائمة التقارير', icon: 'pi pi-fw pi-list', to: `/${lang}/reports`},
             ]
         },
         {

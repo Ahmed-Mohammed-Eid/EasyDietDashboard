@@ -13,6 +13,7 @@ import { Calendar } from 'primereact/calendar';
 import { InputNumber } from 'primereact/inputnumber';
 import { RadioButton } from 'primereact/radiobutton';
 import { useRouter } from 'next/navigation';
+import { InputText } from 'primereact/inputtext';
 
 export default function List({ clientType = 'offline', lang }) {
 
@@ -22,6 +23,7 @@ export default function List({ clientType = 'offline', lang }) {
     // PAGE STATE
     const [page, setPage] = useState(1);
     const [loadOption, setLoadOption] = useState('deleteOld');
+    const [globalFilter, setGlobalFilter] = useState("");
 
     // STATE TO STORE DATA
     const [clients, setClients] = useState([]);
@@ -409,6 +411,12 @@ export default function List({ clientType = 'offline', lang }) {
             });
     };
 
+
+    // GLOBAL FILTER
+    const onGlobalFilter = (e) => {
+        setGlobalFilter(e.target.value);
+    };
+
     return (
         <>
             {/*LOAD MORE DATA*/}
@@ -494,9 +502,25 @@ export default function List({ clientType = 'offline', lang }) {
                         />
                         <label>{lang === 'en' ? 'All' : 'الكل'}</label>
                     </div>
+
+                    {/*  SEARCH  */}
+                    <div className={'col-12'}>
+                        <label
+                            htmlFor={'search'}
+                            style={{ display: 'block', fontWeight: 'bold' }}
+                        >
+                            {lang === 'en' ? 'Search' : 'بحث'}
+                        </label>
+                        <InputText
+                            id={'search'}
+                            value={globalFilter}
+                            onChange={onGlobalFilter}
+                            placeholder={lang === 'en' ? 'Search' : 'بحث'}
+                            style={{ width: '100%', marginTop: '1rem' }}
+                        />
+                    </div>
                 </div>
             </div>
-
 
             <DataTable
                 value={clients || []}
@@ -504,6 +528,7 @@ export default function List({ clientType = 'offline', lang }) {
                 rows={50}
                 rowsPerPageOptions={[5, 10, 20, 50, 100, 200]}
                 className="p-datatable-sm"
+                globalFilter={globalFilter}
             >
                 <Column
                     field="subscriptionId"

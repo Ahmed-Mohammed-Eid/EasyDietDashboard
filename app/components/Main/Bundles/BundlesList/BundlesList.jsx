@@ -171,7 +171,6 @@ export default function BundlesList({ lang }) {
                         filterPlaceholder={lang === 'en' ? 'Search by Status' : 'ابحث بالحالة'}
                         style={{ whiteSpace: 'nowrap' }}
                         body={(rowData) => {
-                            console.log(rowData);
                             return (
                                 <Tag value={lang === 'en' ? rowData.deActivate ? 'Deactivated' : 'Activated' : rowData.deActivate ? 'تم تعطيلها' : 'تم تفعيلها'} severity={rowData.deActivate  ? 'danger' : 'success'}/>
                             );
