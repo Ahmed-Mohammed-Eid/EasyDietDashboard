@@ -267,7 +267,7 @@ export default function Content({ lang }) {
             {/*  THE LIST OF THE ENDING SOON CLIENTS ONLINE */}
             <div className="col-12">
                 <div className="card">
-                    <h5>{lang === 'en' ? 'Ending Soon Clients Online' : 'العملاء القدامى اونلاين'}</h5>
+                    <h5>{lang === 'en' ? 'Ending Soon Clients Online' : 'عملاء ستنتهى اشتراكاتهم اونلاين'}</h5>
                     <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.endingClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
@@ -333,7 +333,7 @@ export default function Content({ lang }) {
             {/*  THE LIST OF THE ENDING SOON CLIENTS OFFLINE */}
             <div className="col-12">
                 <div className="card">
-                    <h5>{lang === 'en' ? 'Ending Soon Clients Offline' : 'العملاء القدامى اوفلاين'}</h5>
+                    <h5>{lang === 'en' ? 'Ending Soon Clients Offline' : 'عملاء ستنتهى اشتراكاتهم اوفلاين'}</h5>
                     <DataTable dir={lang === 'en' ? 'ltr' : 'rtl'} value={clientTypesTable.endingOfflineClients || []} className="p-datatable-sm">
                         {/*ID*/}
                         <Column field="subscriptionId" header={lang === 'en' ? 'ID' : 'الرقم'} />
