@@ -709,7 +709,7 @@ export default function List({ clientType = 'offline', lang }) {
                                     className="btn btn-sm btn-primary"
                                     onClick={() => {
                                         // HANDLE EDIT
-                                        router.push(`/clients/${rowData._id}`);
+                                        router.push(`/${lang}/clients/${rowData._id}`);
                                     }}
                                 >
                                     {lang === 'en' ? 'Edit' : 'تعديل'}

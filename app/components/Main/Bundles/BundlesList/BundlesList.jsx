@@ -230,7 +230,7 @@ export default function BundlesList({ lang }) {
                                     </button>
                                     <button
                                         className={'AMB_btn AMB_btn-primary'}
-                                        onClick={() => router.push((`/bundles/${rowData._id}`))}
+                                        onClick={() => router.push((`/${lang}/bundles/${rowData._id}`))}
                                     >
                                         {lang === 'en' ? 'Edit' : 'تعديل'}
                                     </button>

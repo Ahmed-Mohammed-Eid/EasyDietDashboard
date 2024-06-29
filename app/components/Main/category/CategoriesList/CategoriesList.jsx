@@ -106,7 +106,7 @@ export default function CategoriesList({ lang }) {
                         body={(rowData) => {
                             return (
                                 <div className={'flex justify-center'}>
-                                    <button className={'AMB_btn AMB_btn-primary'} onClick={() => router.push(`/categories/${rowData._id}`)}>
+                                    <button className={'AMB_btn AMB_btn-primary'} onClick={() => router.push(`/${lang}/categories/${rowData._id}`)}>
                                         {lang === 'en' ? 'Edit' : 'تعديل'}
                                     </button>
                                     <button className={'AMB_btn AMB_btn-danger'} onClick={() => setSelectedCategoryToDelete(rowData)}>

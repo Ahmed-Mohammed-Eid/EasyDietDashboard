@@ -181,7 +181,7 @@ export default function MealsList({ lang }) {
                                     </button>
                                     <button
                                         className={'AMB_btn AMB_btn-primary'}
-                                        onClick={() => router.push((`/meals/${rowData._id}`))}
+                                        onClick={() => router.push((`/${lang}/meals/${rowData._id}`))}
                                     >
                                         {lang === 'en' ? 'Edit' : 'تعديل'}
                                     </button>
