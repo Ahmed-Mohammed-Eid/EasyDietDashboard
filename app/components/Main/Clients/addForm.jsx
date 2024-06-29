@@ -553,6 +553,7 @@ export default function AddClientForm({ lang }) {
                     />
                 </div>
             </form>
+
             <Dialog
                 header={lang === 'en' ? 'Client Signing In Details' : 'تفاصيل تسجيل الدخول للعميل'}
                 visible={clientSigningIn?.dialogVisible}
