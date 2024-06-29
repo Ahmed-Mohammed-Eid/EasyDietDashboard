@@ -74,7 +74,7 @@ export default function UpdateClientForm({ lang, id }) {
             appartment,
             appartmentNo,
             landmark,
-            dislikedMeals: dislikedMeals.join(','),
+            dislikedMeals: dislikedMeals.length > 0 ? dislikedMeals.join(',') : '',
             clientId: id
         }, { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
             .then(_ => {
@@ -107,7 +107,12 @@ export default function UpdateClientForm({ lang, id }) {
                 setAppartment(client.appartment);
                 setAppartmentNo(client.appartmentNo);
                 setLandmark(client.landmark);
-                setDislikedMeals(client.dislikedMeals.split(','));
+
+                // SET THE DISLIKED MEALS
+                if(client.dislikedMeals) {
+                    setDislikedMeals(client.dislikedMeals.split(','));
+                }
+
             })
             .catch(err => {
                 console.log(err);

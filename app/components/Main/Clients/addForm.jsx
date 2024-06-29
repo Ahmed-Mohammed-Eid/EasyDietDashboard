@@ -130,7 +130,7 @@ export default function AddClientForm({ lang }) {
             appartmentNo,
             landmark,
             clientType,
-            dislikedMeals: dislikedMeals.join(','),
+            dislikedMeals: dislikedMeals.length > 0 ? dislikedMeals.join(',') : '',
             password,
             bundleId,
             startingDate: formattedDate
