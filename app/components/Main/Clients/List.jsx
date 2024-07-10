@@ -1165,7 +1165,7 @@ export default function List({ clientType = 'offline', lang }) {
                             dateFormat="yy-mm-dd"
                             placeholder={lang === 'en' ? 'Select Date' : 'اختر التاريخ'}
                             // MIN DATE IS AFTER 48 HOURS
-                            minDate={!freezeDialog?.clientStatus?.paused ? new Date(new Date().getTime() + 48 * 60 * 60 * 1000) : new Date(freezeDialog?.clientStatus?.pauseDate)}
+                            minDate={!freezeDialog?.clientStatus?.paused ? new Date(new Date().getTime() + 24 * 60 * 60 * 1000) : new Date(freezeDialog?.clientStatus?.pauseDate)}
                             style={{ width: '100%' }}
                         />
                     </div>

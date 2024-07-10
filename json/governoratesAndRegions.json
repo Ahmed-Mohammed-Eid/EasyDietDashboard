@@ -4,39 +4,51 @@
     "englishName": "Capital",
     "cities": [
       {
-        "englishName": "Kuwait City",
-        "arabicName": "مدينة الكويت"
+        "englishName": "Jaber Al-Ahmad City",
+        "arabicName": "مدينة جابر الأحمد"
       },
       {
-        "englishName": "Dasma",
-        "arabicName": "الدسمة"
+        "englishName": "Sulaibikhat",
+        "arabicName": "الصليبيخات"
       },
       {
-        "englishName": "Da'iya",
-        "arabicName": "الدعية"
+        "englishName": "North West Sulaibikhat",
+        "arabicName": "شمال غرب الصليبيخات"
       },
       {
-        "englishName": "Bneid il-Gār",
-        "arabicName": "بنيد القار"
+        "englishName": "Mansouriya",
+        "arabicName": "المنصورية"
       },
       {
         "englishName": "Keifan",
         "arabicName": "كيفان"
       },
       {
-        "englishName": "Mansūriya",
-        "arabicName": "المنصورية"
+        "englishName": "Salhiya",
+        "arabicName": "الصالحية"
       },
       {
-        "englishName": "Abdullah as-Salim suburb",
-        "arabicName": "ضاحية عبد الله السالم"
+        "englishName": "Qadsiya",
+        "arabicName": "القادسية"
       },
       {
-        "englishName": "Nuzha",
-        "arabicName": "النزهة"
+        "englishName": "Bnied Al-Gar",
+        "arabicName": "بنيد القار"
       },
       {
-        "englishName": "Faiha'",
+        "englishName": "Yarmouk",
+        "arabicName": "اليرموك"
+      },
+      {
+        "englishName": "Watiya",
+        "arabicName": "الوطية"
+      },
+      {
+        "englishName": "Da'iya",
+        "arabicName": "الدعية"
+      },
+      {
+        "englishName": "Faiha",
         "arabicName": "الفيحاء"
       },
       {
@@ -48,60 +60,88 @@
         "arabicName": "الروضة"
       },
       {
-        "englishName": "Adiliya",
+        "englishName": "Nuzha",
         "arabicName": "النزهة"
       },
       {
-        "englishName": "Khaldiya",
-        "arabicName": "الخالدية"
+        "englishName": "Nahda",
+        "arabicName": "النهضة"
       },
       {
-        "englishName": "Qadsiya",
-        "arabicName": "القادسية"
+        "englishName": "Murgab",
+        "arabicName": "المرقاب"
       },
       {
-        "englishName": "Qurtuba",
-        "arabicName": "قرطبة"
-      },
-      {
-        "englishName": "Surra",
-        "arabicName": "السرة"
-      },
-      {
-        "englishName": "Yarmūk",
-        "arabicName": "اليرموك"
-      },
-      {
-        "englishName": "Shuwaikh",
-        "arabicName": "الشويخ السكنية"
-      },
-      {
-        "englishName": "Rai",
-        "arabicName": "الري"
-      },
-      {
-        "englishName": "Ghirnata",
-        "arabicName": "غرناطة"
-      },
-      {
-        "englishName": "Sulaibikhat",
-        "arabicName": "الصليبخات"
+        "englishName": "Sawaber",
+        "arabicName": "الصوابر"
       },
       {
         "englishName": "Doha",
         "arabicName": "الدوحة"
       },
       {
-        "englishName": "Nahdha",
-        "arabicName": "النهضة"
+        "englishName": "Qortuba",
+        "arabicName": "قرطبة"
       },
       {
-        "englishName": "Jabir al-Ahmad City",
-        "arabicName": "مدينة جابر الأحمد"
+        "englishName": "Adailiya",
+        "arabicName": "العديلية"
       },
       {
-        "englishName": "Qairawān",
-        "arabicName": "القيروان"
+        "englishName": "Abdullah Al-Salem Suburb",
+        "arabicName": "ضاحية عبدالله السالم"
+      },
+      {
+        "englishName": "Sharq",
+        "arabicName": "الشرق"
+      },
+      {
+        "englishName": "Dasman",
+        "arabicName": "دسمان"
+      },
+      {
+        "englishName": "Shuwaikh",
+        "arabicName": "الشويخ"
+      },
+      {
+        "englishName": "Shuwaikh Industrial 1",
+        "arabicName": "الشويخ الصناعية 1"
+      },
+      {
+        "englishName": "Shuwaikh Industrial 2",
+        "arabicName": "الشويخ الصناعية 2"
+      },
+      {
+        "englishName": "Shuwaikh Industrial 3",
+        "arabicName": "الشويخ الصناعية 3"
+      },
+      {
+        "englishName": "Shuwaikh Health",
+        "arabicName": "الشويخ الصحية"
+      },
+      {
+        "englishName": "Shuwaikh Education",
+        "arabicName": "الشويخ التعليمية"
+      },
+      {
+        "englishName": "Surra",
+        "arabicName": "السرة"
+      },
+      {
+        "englishName": "Rai",
+        "arabicName": "الري"
+      },
+      {
+        "englishName": "Granada",
+        "arabicName": "غرناطة"
+      },
+      {
+        "englishName": "Mubarakiyah Camps",
+        "arabicName": "معسكرات المباركية"
+      },
+      {
+        "englishName": "Khaldiya",
+        "arabicName": "الخالدية"
       }
     ]
   },
@@ -110,60 +150,68 @@
     "englishName": "Hawalli",
     "cities": [
       {
-        "englishName": "Hawally",
-        "arabicName": "حولي"
+        "englishName": "Jabriya",
+        "arabicName": "الجابرية"
       },
       {
         "englishName": "Rumaithiya",
         "arabicName": "الرميثية"
       },
       {
-        "englishName": "Jabriya",
-        "arabicName": "الجابرية"
+        "englishName": "Bayan",
+        "arabicName": "بيان"
+      },
+      {
+        "englishName": "Mishref",
+        "arabicName": "مشرف"
+      },
+      {
+        "englishName": "Zahra",
+        "arabicName": "الزهراء"
+      },
+      {
+        "englishName": "Dahia Mubarak Al-Abdullah Al-Jaber",
+        "arabicName": "ضاحية مبارك العبد الله الجابر"
+      },
+      {
+        "englishName": "Shuhada",
+        "arabicName": "الشهداء"
       },
       {
         "englishName": "Salmiya",
         "arabicName": "السالمية"
       },
       {
-        "englishName": "Mishrif",
-        "arabicName": "مشرف"
-      },
-      {
-        "englishName": "Sha'ab",
-        "arabicName": "الشعب"
-      },
-      {
-        "englishName": "Bayān",
-        "arabicName": "بيان"
-      },
-      {
-        "englishName": "Bi'di'",
-        "arabicName": "البدع"
-      },
-      {
-        "englishName": "Nigra",
-        "arabicName": "النقرة"
+        "englishName": "Hawalli",
+        "arabicName": "حولي"
       },
       {
         "englishName": "Salwa",
         "arabicName": "سلوى"
       },
       {
-        "englishName": "Maidan Hawalli",
-        "arabicName": "ميدان حولي"
-      },
-      {
-        "englishName": "Mubarak aj-Jabir suburb",
-        "arabicName": "ضاحية مبارك الجابر"
-      },
-      {
-        "englishName": "South Surra",
-        "arabicName": "جنوب السرة"
-      },
-      {
-        "englishName": "Hittin",
+        "englishName": "Hateen",
         "arabicName": "حطين"
+      },
+      {
+        "englishName": "Bidaa",
+        "arabicName": "البدع"
+      },
+      {
+        "englishName": "Siddiq",
+        "arabicName": "الصديق"
+      },
+      {
+        "englishName": "Shaab",
+        "arabicName": "الشعب"
+      },
+      {
+        "englishName": "Salam",
+        "arabicName": "السلام"
+      },
+      {
+        "englishName": "Nugra",
+        "arabicName": "النقرة"
       }
     ]
   },
@@ -172,44 +220,48 @@
     "englishName": "Mubarak al-Kabeer",
     "cities": [
       {
-        "englishName": "Mubarak al-Kabeer",
-        "arabicName": "مبارك الكبير"
-      },
-      {
-        "englishName": "Adān",
-        "arabicName": "العدان"
-      },
-      {
-        "englishName": "Qurain",
-        "arabicName": "القرين"
-      },
-      {
-        "englishName": "Qusūr",
-        "arabicName": "القصور"
-      },
-      {
-        "englishName": "Sabah as-Salim suburb",
+        "englishName": "Dahia Sabah Al-Salem",
         "arabicName": "ضاحية صباح السالم"
       },
       {
-        "englishName": "Misīla",
-        "arabicName": "المسيلة"
+        "englishName": "Dahia Mubarak Al-Kabeer",
+        "arabicName": "ضاحية مبارك الكبير"
       },
       {
-        "englishName": "Abu 'Fteira",
-        "arabicName": "أبو فطيرة"
+        "englishName": "Qusoor",
+        "arabicName": "القصور"
       },
       {
-        "englishName": "Sabhān",
-        "arabicName": "صبحان"
+        "englishName": "Qurain",
+        "arabicName": "منطقة القرين"
       },
       {
-        "englishName": "Fintās",
-        "arabicName": "الفنطاس"
+        "englishName": "Abu Al-Hasaniya",
+        "arabicName": "منطقة أبو الحصاني"
       },
       {
-        "englishName": "Funaitīs",
-        "arabicName": "الفنيطيس"
+        "englishName": "Abu Fatira",
+        "arabicName": "منطقة أبو فطيرة"
+      },
+      {
+        "englishName": "Adan",
+        "arabicName": "منطقة العدان"
+      },
+      {
+        "englishName": "Sabhan",
+        "arabicName": "منطقة صبحان"
+      },
+      {
+        "englishName": "Messila",
+        "arabicName": "منطقة المسيلة"
+      },
+      {
+        "englishName": "Masayel",
+        "arabicName": "منطقة المسايل"
+      },
+      {
+        "englishName": "Fnaitees",
+        "arabicName": "منطقة الفنيطيس"
       }
     ]
   },
@@ -218,31 +270,15 @@
     "englishName": "Ahmadi",
     "cities": [
       {
-        "englishName": "Ahmadi",
-        "arabicName": "الأحمدي"
-      },
-      {
-        "englishName": "Aqila",
-        "arabicName": "العقيلة"
-      },
-      {
-        "englishName": "Zuhar",
+        "englishName": "Dhaher",
         "arabicName": "الظهر"
       },
       {
-        "englishName": "Mahbula",
-        "arabicName": "المهبولة"
+        "englishName": "Maqwa",
+        "arabicName": "المقوع"
       },
       {
-        "englishName": "Rigga",
-        "arabicName": "الرقة"
-      },
-      {
-        "englishName": "Hadiya",
-        "arabicName": "هدية"
-      },
-      {
-        "englishName": "Abu Hulaifa",
+        "englishName": "Abu Halaifa",
         "arabicName": "أبو حليفة"
       },
       {
@@ -254,16 +290,100 @@
         "arabicName": "المنقف"
       },
       {
+        "englishName": "Mina Abdullah",
+        "arabicName": "ميناء عبد الله"
+      },
+      {
+        "englishName": "Wafra Agricultural Area",
+        "arabicName": "الوفرة الزراعية"
+      },
+      {
+        "englishName": "Bnider",
+        "arabicName": "بنيدر"
+      },
+      {
+        "englishName": "Julaia",
+        "arabicName": "الجليعة"
+      },
+      {
+        "englishName": "Dhiba'iya",
+        "arabicName": "الضباعية"
+      },
+      {
+        "englishName": "Fintas",
+        "arabicName": "الفنطاس"
+      },
+      {
+        "englishName": "Aqeela",
+        "arabicName": "العقيلة"
+      },
+      {
+        "englishName": "Reqqa",
+        "arabicName": "الرقة"
+      },
+      {
+        "englishName": "Hadiya",
+        "arabicName": "هدية"
+      },
+      {
         "englishName": "Fahaheel",
         "arabicName": "الفحيحيل"
       },
       {
-        "englishName": "Jabir al-Ali Suburb",
+        "englishName": "Ahmadi",
+        "arabicName": "الأحمدي"
+      },
+      {
+        "englishName": "Mahboula",
+        "arabicName": "المهبولة"
+      },
+      {
+        "englishName": "Dahia Jaber Al-Ali",
         "arabicName": "ضاحية جابر العلي"
       },
       {
-        "englishName": "Fahd al-Ahmad Suburb",
+        "englishName": "Dahia Fahad Al-Ahmad",
         "arabicName": "ضاحية فهد الأحمد"
+      },
+      {
+        "englishName": "Shuaiba",
+        "arabicName": "الشعيبة"
+      },
+      {
+        "englishName": "Wafra",
+        "arabicName": "الوفرة"
+      },
+      {
+        "englishName": "Zour",
+        "arabicName": "الزور"
+      },
+      {
+        "englishName": "Khiran",
+        "arabicName": "الخيران"
+      },
+      {
+        "englishName": "Sabah Al-Ahmad City",
+        "arabicName": "مدينة صباح الأحمد"
+      },
+      {
+        "englishName": "Nuwaiseeb",
+        "arabicName": "النويصيب"
+      },
+      {
+        "englishName": "Khiran City",
+        "arabicName": "مدينة الخيران"
+      },
+      {
+        "englishName": "Wara",
+        "arabicName": "واره"
+      },
+      {
+        "englishName": "Dahia Ali Sabah Al-Salem (previously Um Al-Haiman)",
+        "arabicName": "ضاحية علي صباح السالم أم الهيمان سابقاً"
+      },
+      {
+        "englishName": "Sabah Al-Ahmad Marine City",
+        "arabicName": "مدينة صباح الأحمد البحرية"
       }
     ]
   },
@@ -272,56 +392,96 @@
     "englishName": "Al Farwaniyah",
     "cities": [
       {
-        "englishName": "Khaitan",
-        "arabicName": "خيطان "
+        "englishName": "Abraq Khaitan",
+        "arabicName": "أبريق الخيطان"
       },
       {
         "englishName": "Andalus",
-        "arabicName": "الاندلس "
+        "arabicName": "الأندلس"
       },
       {
-        "englishName": "Ashbelya",
-        "arabicName": "اشبيليا"
+        "englishName": "Firdous",
+        "arabicName": "الفردوس"
       },
       {
-        "englishName": "omariya",
-        "arabicName": "العمرية"
+        "englishName": "Shadadiya",
+        "arabicName": "الشدادية"
       },
       {
-        "englishName": "ardiya",
-        "arabicName": "العارضية"
+        "englishName": "Dhajeej",
+        "arabicName": "الضجيج"
       },
       {
-        "englishName": "fordous",
-        "arabicName": "االفردوس "
-      },
-      {
-        "englishName": "abdullah  almubarak",
-        "arabicName": "عبدالله مبارك "
-      },
-      {
-        "englishName": "West Abdullah Al Mubarak",
-        "arabicName": "غرب عبدالله مبارك "
-      },
-      {
-        "englishName": "Farwaniya",
-        "arabicName": "الفروانية"
-      },
-      {
-        "englishName": "Rabieh",
-        "arabicName": "الرابية"
-      },
-      {
-        "englishName": "Al-Rehab",
-        "arabicName": "الرحاب"
-      },
-      {
-        "englishName": "Al-Raqi",
+        "englishName": "Riqee",
         "arabicName": "الرقعي"
       },
       {
-        "englishName": "Sabah Al-Nasser",
-        "arabicName": "صباح الناصر"
+        "englishName": "Khaitan",
+        "arabicName": "خيطان"
+      },
+      {
+        "englishName": "Rahab",
+        "arabicName": "الرحب"
+      },
+      {
+        "englishName": "Omariya",
+        "arabicName": "العمرية"
+      },
+      {
+        "englishName": "Ishbiliya",
+        "arabicName": "إشبيلية"
+      },
+      {
+        "englishName": "Jleeb Al-Shuyoukh",
+        "arabicName": "جليب الشيوخ"
+      },
+      {
+        "englishName": "Rabia",
+        "arabicName": "الرابية"
+      },
+      {
+        "englishName": "Rai",
+        "arabicName": "الري"
+      },
+      {
+        "englishName": "Rai Industrial",
+        "arabicName": "الري الصناعية"
+      },
+      {
+        "englishName": "Dahia Sabah Al-Nasser",
+        "arabicName": "ضاحية صباح الناصر"
+      },
+      {
+        "englishName": "Dahia Abdullah Al-Mubarak",
+        "arabicName": "ضاحية عبدالله المبارك"
+      },
+      {
+        "englishName": "West Abdullah Al-Mubarak",
+        "arabicName": "غرب عبدالله المبارك"
+      },
+      {
+        "englishName": "Ardiya",
+        "arabicName": "العارضية"
+      },
+      {
+        "englishName": "Ardiya Industrial",
+        "arabicName": "العارضية الصناعية"
+      },
+      {
+        "englishName": "Ardiya Craft",
+        "arabicName": "العارضية الحرفية"
+      },
+      {
+        "englishName": "Hassawi",
+        "arabicName": "الحساوي"
+      },
+      {
+        "englishName": "Abbasiya",
+        "arabicName": "العباسية"
+      },
+      {
+        "englishName": "Airport Area",
+        "arabicName": "منطقة المطار"
       }
     ]
   },
@@ -330,44 +490,84 @@
     "englishName": "Jahra",
     "cities": [
       {
-        "englishName": "Jahra",
-        "arabicName": "الجهراء  "
+        "englishName": "Naeem",
+        "arabicName": "النعيم"
       },
       {
-        "englishName": "Al Naseem",
-        "arabicName": "النسيم "
+        "englishName": "Sulaibiya",
+        "arabicName": "الصليبة"
       },
       {
-        "englishName": "AL WAHA",
-        "arabicName": "الواحه "
+        "englishName": "Waha",
+        "arabicName": "الواحة"
+      },
+      {
+        "englishName": "Qasr",
+        "arabicName": "القصر"
+      },
+      {
+        "englishName": "Tayma",
+        "arabicName": "تيماء"
+      },
+      {
+        "englishName": "Amghara",
+        "arabicName": "أمغرة"
       },
       {
         "englishName": "Oyoun",
         "arabicName": "العيون"
       },
       {
-        "englishName": "Taima",
-        "arabicName": "تيماء"
+        "englishName": "Naseem",
+        "arabicName": "النسيم"
       },
       {
-        "englishName": "sulaibaiya",
-        "arabicName": "صليبية"
+        "englishName": "Abdali",
+        "arabicName": "العبدلي"
       },
       {
-        "englishName": "Qasr",
-        "arabicName": "القصر "
+        "englishName": "Qaisariya",
+        "arabicName": "القيصرية"
       },
       {
-        "englishName": "Naeem",
-        "arabicName": "النعيم "
+        "englishName": "Old Jahra",
+        "arabicName": "جهراء القديمة"
       },
       {
-        "englishName": "Saad Al-Abdullah",
-        "arabicName": "سعد العبدالله "
+        "englishName": "New Jahra",
+        "arabicName": "جهراء الجديدة"
       },
       {
-        "englishName": "Al Mutla",
+        "englishName": "Kazma",
+        "arabicName": "الكاظمة"
+      },
+      {
+        "englishName": "Subiya",
+        "arabicName": "الصبية"
+      },
+      {
+        "englishName": "Saad Al-Abdullah City",
+        "arabicName": "مدينة سعد العبدلله"
+      },
+      {
+        "englishName": "Rawdatain",
+        "arabicName": "الروضتين"
+      },
+      {
+        "englishName": "Al-Tahrir City",
+        "arabicName": "مدينة التحرير"
+      },
+      {
+        "englishName": "Kabed",
+        "arabicName": "كبد"
+      },
+      {
+        "englishName": "Mutlaa",
         "arabicName": "المطلاع"
+      },
+      {
+        "englishName": "Salmi",
+        "arabicName": "السالمي"
       }
     ]
   }
