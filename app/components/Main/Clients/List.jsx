@@ -866,7 +866,9 @@ export default function List({ clientType = 'offline', lang }) {
                             dateFormat="yy-mm-dd"
                             placeholder={lang === 'en' ? 'Select Date' : 'اختر التاريخ'}
                             // MIN DATE IS AFTER 48 HOURS
-                            minDate={new Date(new Date().getTime() + 48 * 60 * 60 * 1000)}
+                            // minDate={new Date(new Date().getTime() + 48 * 60 * 60 * 1000)}
+                            // IF ONLINE USER CAN RENEW FROM 48 HOURS AND IF THE CLIENT IS OFFLINE CAN RENEW FROM TODAY
+                            minDate={infoDialog.clientType === 'offline' ? new Date() : new Date(new Date().getTime() + 48 * 60 * 60 * 1000)}
                             style={{ width: '100%' }}
                         />
                     </div>

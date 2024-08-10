@@ -203,7 +203,7 @@ export default function BundlesList({ lang }) {
                             return (
                                 <div className={'flex gap-1'}>
                                     {
-                                        rowData.mealsType.map((type, index) => (
+                                        rowData?.mealsType?.map((type, index) => (
                                             <Tag key={index} value={type} severity={
                                                 type === 'افطار' ? 'info' :
                                                     type === 'غداء' ? 'success' :
