@@ -95,7 +95,8 @@ export default function ReportsContent({ lang }) {
                                 label: lang === 'en' ? 'Kitchen Meals Total' : 'إجمالي وجبات المطبخ',
                                 value: 'kitchenMeals'
                             },
-                            { label: lang === 'en' ? 'Payments\' History' : 'سجل المدفوعات', value: 'paymentHistory' }
+                            { label: lang === 'en' ? 'Payments\' History' : 'سجل المدفوعات', value: 'paymentHistory' },
+                            { label: lang === 'en' ? 'Total Kitchen Meals' : 'اجمالى الوجبات الشهرى', value: 'totalKitchenMeals' }
                         ]}
                         onChange={(e) => setSelectedReport(e.value)}
                         placeholder={lang === 'en' ? 'Select Report' : 'اختر التقرير'}
