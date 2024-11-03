@@ -278,6 +278,10 @@
     "englishName": "Ahmadi",
     "cities": [
       {
+        "englishName": "East Abdullah Al-Mubarak",
+        "arabicName": "غرب عبدالله المبارك"
+      },
+      {
         "englishName": "Dhaher",
         "arabicName": "الظهر"
       },
@@ -399,6 +403,10 @@
     "arabicName": "الفروانية",
     "englishName": "Al Farwaniyah",
     "cities": [
+      {
+        "englishName": "Al farwaniyah",
+        "arabicName": "الفروانية"
+      },
       {
         "englishName": "Abraq Khaitan",
         "arabicName": "أبريق الخيطان"
