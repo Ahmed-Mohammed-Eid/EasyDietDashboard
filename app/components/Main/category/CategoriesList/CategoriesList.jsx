@@ -54,7 +54,7 @@ export default function CategoriesList({ lang }) {
 
         // API CALL /category/delete
         axios
-            .delete(`${process.env.API_URL}/category/delete/${category._id}`, {
+            .delete(`${process.env.API_URL}/delete/bundle/category?categoryId=${category._id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -89,7 +89,13 @@ export default function CategoriesList({ lang }) {
                     <Column
                         body={(rowData) => {
                             return (
-                                <Image src={rowData?.image || '/assets/404.jpg'} alt={lang === 'en' ? 'Category Image' : 'صورة القسم'} width={50} height={50} style={{ width: '50px', height: '50px', borderRadius: '50%', border: '1px solid #ccc' }} />
+                                <Image
+                                    src={rowData?.categoryImage || '/assets/404.jpg'}
+                                    alt={lang === 'en' ? 'Category Image' : 'صورة القسم'}
+                                    width={50}
+                                    height={50}
+                                    style={{ width: '50px', height: '50px', borderRadius: '50%', border: '1px solid #ccc' }}
+                                />
                             );
                         }}
                         header={lang === 'en' ? 'Image' : 'الصورة'}
@@ -128,7 +134,7 @@ export default function CategoriesList({ lang }) {
                 header={lang === 'en' ? 'Delete Category' : 'حذف القسم'}
                 footer={
                     <div className={'flex justify-center'}>
-                        <button className={'AMB_btn AMB_btn-danger'} onClick={() => deleteCategory(selectedBundleToDelete)}>
+                        <button className={'AMB_btn AMB_btn-danger'} onClick={() => deleteCategory(selectedCategoryToDelete)}>
                             {lang === 'en' ? 'Delete' : 'حذف'}
                         </button>
                         <button className={'AMB_btn AMB_btn-primary'} onClick={() => setSelectedCategoryToDelete(null)}>
