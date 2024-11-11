@@ -443,7 +443,7 @@ export default function EmployeeList({ lang }) {
                             <Password
                                 id="password"
                                 value={employeeEditData.password}
-                                onChange={(e) => setEmployeeEditData({ ...employeeEditData, password: e.value })}
+                                onChange={(e) => setEmployeeEditData({ ...employeeEditData, password: e.target.value })}
                                 feedback={false}
                                 toggleMask={true}
                                 placeholder={lang === 'en' ? 'Password' : 'كلمة المرور'}
